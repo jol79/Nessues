@@ -21,7 +21,7 @@ from nessues_app_users.views import register_view, login_view
 import nessues_app_users.views as users_views
 
 urlpatterns = [
-    path('', views.home_view),
+    path('', views.home_view, name='home'),
     path('login/', users_views.login_view, name='login'),
     path('register/', users_views.register_view, name='register'), 
     path('admin/', admin.site.urls),
