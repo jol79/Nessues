@@ -10,11 +10,7 @@ def register_view(request):
             form.save()
             username = form.cleaned_data.get('username')
             messages.success(request, f'Account successfully created for {username}')
-            return redirect('home') # redirect to the home page
-        # messages.error(request, )
+            return redirect('login')
     else:
         form = UserRegisterForm()
     return render(request, 'nessues_app_users/register.html', {'form': form})
-
-def login_view(request):
-    return render(request, 'nessues_app_users/login.html')
