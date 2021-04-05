@@ -1,0 +1,33 @@
+
+html,
+body{
+    background-color: #FAAD41;
+    /* top right bottom left */
+    /* margin: 3.5% 3% 0% 3%; */
+    height: 100%;
+}
+
+.container{
+    background: #ffffff;
+    box-shadow: 6px 5px 4px rgba(0, 0, 0, 0.13);
+    border: 1px solid #dddddd;
+    border-radius: 10px;
+    width: 80%;
+    height: 80%;
+    margin-top: 3.5%;
+}
+
+.container-data{
+    padding: 30px;
+}
+
+.footer{
+    position: fixed;
+    left: 0;
+    right: 0;
+    width: 100%;
+    /* background-color: #FAAD41; */
+    
+    color: #444444;
+    text-align: center;
+}
