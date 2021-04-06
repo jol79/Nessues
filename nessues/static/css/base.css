@@ -17,6 +17,20 @@ body{
     margin-top: 3.5%;
 }
 
+.container-auth{
+    background: #ffffff;
+    box-shadow: 6px 5px 4px rgba(0, 0, 0, 0.13);
+    border: 1px solid #dddddd;
+    border-radius: 10px;
+    width: 30%;
+    height: 60%;
+    margin-top: 3.5%;
+}
+
+.container-data-auth{
+    padding: 30px;
+}
+
 .container-data{
     padding: 30px;
 }

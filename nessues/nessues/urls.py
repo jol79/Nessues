@@ -22,8 +22,11 @@ import django.contrib.auth.views as auth_views
 
 urlpatterns = [
     path('', views.home_view, name='home'),
-    path('login/', auth_views.LoginView.as_view(template_name='nessues_app_users/login.html'), name='login'),
-    path('logout/', auth_views.LogoutView.as_view(template_name='nessues_app_users/logout.html'), name='logout'),
-    path('register/', users_views.register_view, name='register'), 
+    path('login/', users_views.login_view, name='login'),
+    path('logout/', users_views.logout_view, name='logout'),
+    path('register/', users_views.register_view, name='register'),
     path('admin/', admin.site.urls),
+
+    # path('login/', auth_views.LoginView.as_view(template_name='nessues_app_users/login.html'), name='login'),
+    # path('logout/', auth_views.LogoutView.as_view(template_name='nessues_app_users/logout.html'), name='logout'),
 ]
