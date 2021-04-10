@@ -2,5 +2,36 @@
 
 
 {% block content %}
-    <p>Welcome, {{ request.user }}</p>
+    <div class="account-page">
+
+        <!-- Links -->
+        <div class="account-links">
+            <a class="btn btn-outline-secondary rounded-pill" href="/">Home</a>
+            <a class="btn btn-outline-secondary rounded-pill" href="/logout">Logout</a>
+        </div>
+
+        <!-- User img -->
+        <div class="account-image">
+            <img src="#" alt="profile image {{ request.user }}">
+        </div>
+        
+        <!-- Username -->
+        <div class="account-username">
+            <p>{{ request.user }}</p>
+        </div>
+
+        <!-- Groups/Rooms links -->
+        <div class="account-gr-links">
+            <a class="btn btn-outline-secondary rounded-pill" style="margin-right: 2%;" href="#">Groups</a>
+            <a class="btn btn-outline-secondary rounded-pill" style="margin-left: 2%;" href="#">Mono</a>
+        </div>
+
+        <!-- Groups/Rooms statistics -->
+        <div class="account-statistics">
+            You are participating in: <strong>10</strong> Groups
+            <br>
+            You have already created <strong>29</strong> Mono rooms
+        </div>
+
+    </div>
 {% endblock content %}

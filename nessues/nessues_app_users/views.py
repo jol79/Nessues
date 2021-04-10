@@ -46,6 +46,7 @@ def logout_view(request):
     messages.info(request, 'You are successfully logged out!')
     return redirect('home')
 
+
 @login_required(login_url='/login')
 def account_view(request):
     content = {}

@@ -64,6 +64,26 @@ main{
     grid-column: 2/3;
 }
 
+.account-page{
+    text-align: center;
+}
+.account-links{
+    display: flex;
+    justify-content: space-between;
+}
+.account-image{
+    margin-top: 50%;
+}
+.account-username{
+    margin-top: 10%;
+}
+.account-gr-links{
+    margin-top: 10%;
+}
+.account-statistics{
+    margin-top: 35%;
+}
+
 .footer{
     position: fixed;
     left: 0;
