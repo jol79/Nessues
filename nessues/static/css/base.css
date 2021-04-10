@@ -39,6 +39,31 @@ body{
     padding: 30px;
 }
 
+pre{
+    display: block;
+    /* margin-top: 0; */
+    /* margin-bottom: 1rem; */
+    overflow: auto;
+    font-size: .875em;
+}
+
+.home-description{
+    background: yellow;
+}
+.home-img-guide{
+    background: green;
+}
+
+main{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    text-align: center;
+}
+
+.home-img-guide{
+    grid-column: 2/3;
+}
+
 .footer{
     position: fixed;
     left: 0;
