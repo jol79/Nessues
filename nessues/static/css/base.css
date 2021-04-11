@@ -2,31 +2,45 @@
 html,
 body{
     background-color: #FAAD41;
-    height: 90%;
+    height: 95%;
     width: 100%;
 }
 
-.container{
+.container-fluid.home{
     background: #ffffff;
     box-shadow: 6px 5px 4px rgba(0, 0, 0, 0.13);
     border: 1px solid #dddddd;
     border-radius: 10px;
-    width: 100%;
-    height: 100%;
-    margin-top: 3.5%;
+    width: 90%;
+    height: 97.5%;
+    margin-top: 3%;
 }
 
-.container-auth{
+.container-fluid.account{
     background: #ffffff;
     box-shadow: 6px 5px 4px rgba(0, 0, 0, 0.13);
     border: 1px solid #dddddd;
     border-radius: 10px;
     width: 30%;
-    height: 80%;
+    height: 95%;
+    margin-top: 3.5%;
+}
+
+.container-fluid.authentication{
+    background: #ffffff;
+    box-shadow: 6px 5px 4px rgba(0, 0, 0, 0.13);
+    border: 1px solid #dddddd;
+    border-radius: 10px;
+    width: 30%;
+    height: 70%;
     margin-top: 3.5%;
 }
 
 .container-home-data{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    text-align: center;
+    
     margin-top: 5%;
     padding-inline: 15%;
 }
@@ -39,29 +53,15 @@ body{
     padding: 30px;
 }
 
-pre{
-    display: block;
-    /* margin-top: 0; */
-    /* margin-bottom: 1rem; */
-    overflow: auto;
-    font-size: .875em;
-}
-
 .home-description{
     background: yellow;
+
+    margin-right: 10%;
 }
 .home-img-guide{
     background: green;
-}
 
-main{
-    display: grid;
-    grid-template-columns: 50% 50%;
-    text-align: center;
-}
-
-.home-img-guide{
-    grid-column: 2/3;
+    margin-left: 10%;
 }
 
 .account-page{

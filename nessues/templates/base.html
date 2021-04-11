@@ -15,7 +15,7 @@
     {% endif %}
 </head>
 <body>
-    <div class="container no_select">
+    <div class="container-fluid home no_select">
         {% if messages %}
             {% for message in messages %}
                 <div class="alert alert-{{ message.tags }}">
@@ -51,9 +51,7 @@
             </nav>
         </div>
         
-        <main>
-            {% block content %}{% endblock content %}
-        </main>
+        {% block content %}{% endblock content %}
 
     </div>
     <div class="footer">
