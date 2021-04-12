@@ -15,7 +15,6 @@ body{
     height: 97.5%;
     margin-top: 3%;
 }
-
 .container-fluid.account{
     background: #ffffff;
     box-shadow: 6px 5px 4px rgba(0, 0, 0, 0.13);
@@ -25,7 +24,6 @@ body{
     height: 95%;
     margin-top: 3.5%;
 }
-
 .container-fluid.authentication{
     background: #ffffff;
     box-shadow: 6px 5px 4px rgba(0, 0, 0, 0.13);
@@ -35,7 +33,6 @@ body{
     height: 70%;
     margin-top: 3.5%;
 }
-
 .container-home-data{
     display: grid;
     grid-template-columns: 50% 50%;
@@ -44,11 +41,9 @@ body{
     margin-top: 5%;
     padding-inline: 15%;
 }
-
 .container-data-auth{
     padding: 30px;
 }
-
 .container-data{
     padding: 30px;
 }

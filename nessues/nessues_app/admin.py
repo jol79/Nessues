@@ -1,3 +1,6 @@
 from django.contrib import admin
+from nessues_app.models import Room, Task
 
-# Register your models here.
+
+admin.site.register(Room)
+admin.site.register(Task)
