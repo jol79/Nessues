@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_list_or_404
 from django.contrib import messages
 
 from .forms import UserRegisterForm
+from nessues_app.models import Room, Task
 
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
@@ -49,7 +50,16 @@ def logout_view(request):
 
 @login_required(login_url='/login')
 def account_view(request):
-    content = {}
+    # get_list_or_404(Room, owner=request.user.id)
+    
+    rooms_stats = Room.objects.filter(owner=request.user.id).count()
+
+    content = {
+        'rooms_stats': rooms_stats
+    }
+
+    print(content)
+
     return render(request, 'nessues_app_users/account.html', context=content)
         
 
