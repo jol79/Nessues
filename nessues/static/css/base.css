@@ -79,6 +79,49 @@ body{
     margin-top: 35%;
 }
 
+/* rooms */
+.workspace-nav{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    margin-top: 2.5%;
+    margin-right: 18%;
+    margin-bottom: -1%;
+    padding-inline: 15%;
+}
+.container-monorooms-data{
+    display: grid;
+    grid-template-columns: 25% 25% 25% 25%;
+    text-align: center;
+    gap: 10%;
+    
+    margin-right: 30%;
+    padding-inline: 15%;
+}
+.data_cubes{
+    text-align: left;
+    padding-top: 2%;
+    padding-left: 5%;
+    padding-bottom: 10%;
+
+    background: #FAAD41; 
+    border-radius: 2px;
+    width: 100%;
+    height: 100%;
+}
+.data_cubes.last-item{
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #F0F2F5;
+
+    padding-left: 0%;
+    padding-top: 6%;
+    padding-bottom: 0%;
+}
+
 .footer{
     position: fixed;
     left: 0;

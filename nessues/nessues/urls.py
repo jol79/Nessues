@@ -26,6 +26,8 @@ urlpatterns = [
     path('logout/', users_views.logout_view, name='logout'),
     path('register/', users_views.register_view, name='register'),
     path('account/', users_views.account_view, name='account'),
+    path('groups/', views.groups_view, name='groups'),
+    path('rooms/', views.rooms_view, name='rooms'),
     path('admin/', admin.site.urls),
 
     # path('login/', auth_views.LoginView.as_view(template_name='nessues_app_users/login.html'), name='login'),

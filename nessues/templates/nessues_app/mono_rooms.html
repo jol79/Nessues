@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <div class="workspace-nav">
+        <p><b>{{ request.user }}</b> Workspace</p>
+    </div>
+
+    <hr style="width: 53%; margin-left: 14.5%;">
+
+    <div class="container-monorooms-data">    
+        {% for data in content.available_room_name %}
+            <a href="#" style="text-decoration: none; color: inherit;">
+                <div class="data_cubes">
+                    <p>{{ data.name }}</p>
+                </div>
+            </a>
+        {% endfor %}
+        <a href="#" style="text-decoration: none; color: inherit;">
+            <div class="data_cubes last-item">
+                <p>Create new room</p>
+            </div>
+        </a>
+    </div>
+{% endblock content %}
