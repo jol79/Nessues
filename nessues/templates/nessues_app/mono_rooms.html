@@ -16,10 +16,17 @@
                 </div>
             </a>
         {% endfor %}
-        <a href="#" style="text-decoration: none; color: inherit;">
+        <!-- <a href="/start_new_room" style="text-decoration: none; color: inherit;">
             <div class="data_cubes last-item">
                 <p>Create new room</p>
             </div>
-        </a>
+        </a> -->
+
+        <form method="POST">
+            {% csrf_token %}
+            {{ content.form.as_p }}
+            <button class="btn btn-primary" type="submit">Create new room</button>
+        </form>
     </div>
+    
 {% endblock content %}

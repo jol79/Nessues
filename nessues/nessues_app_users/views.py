@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_list_or_404
 from django.contrib import messages
 
 from .forms import UserRegisterForm
+from .decorators import unauthenticated, authenticated
 from nessues_app.models import Room, Task
 
 from django.contrib.auth import login, authenticate, logout
@@ -9,6 +10,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 
 
+@authenticated
 def register_view(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -22,6 +24,7 @@ def register_view(request):
     return render(request, 'nessues_app_users/register.html', {'form': form, 'title': 'register'})
 
 
+@authenticated
 def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
@@ -42,6 +45,7 @@ def login_view(request):
     return render(request, 'nessues_app_users/login.html', {'form': form, 'title': 'login'})
 
 
+@unauthenticated
 def logout_view(request):
     logout(request)
     messages.info(request, 'You are successfully logged out!')
