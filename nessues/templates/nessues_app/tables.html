@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <div class="workspace-nav">
+        {% for room_name in content.room %}
+            <p>Available tables for <b>{{ room_name }}</b> room</p>
+        {% endfor %}
+    </div>
+
+    <hr style="width: 53%; margin-left: 14.5%;">
+
+    <div class="container-monorooms-data">    
+        {% for data in content.available_tables %}
+            <a href="#">
+                <div class="data_cubes">
+                    <p>{{ data.name }}</p>
+                </div>
+            </a>
+        {% endfor %}
+        <a href="#">
+            <div class="data_cubes last-item">
+                <p>Create new table</p>
+            </div>
+        </a>
+
+    </div>
+    
+{% endblock content %}

@@ -28,6 +28,7 @@ urlpatterns = [
     path('account/', users_views.account_view, name='account'),
     path('groups/', views.groups_view, name='groups'),
     path('rooms/', views.rooms_view, name='rooms'),
+    path('tables/<int:key_id>/', views.tables_view, name='tables'),
     path('admin/', admin.site.urls),
 
     # path('login/', auth_views.LoginView.as_view(template_name='nessues_app_users/login.html'), name='login'),

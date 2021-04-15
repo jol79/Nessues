@@ -62,8 +62,6 @@ def account_view(request):
         'rooms_stats': rooms_stats
     }
 
-    print(content)
-
     return render(request, 'nessues_app_users/account.html', context=content)
         
 
