@@ -11,7 +11,14 @@ a{
     color: inherit;
 }
 
+#right{
+    position: absolute;
+    bottom: 0%;
+    right: 0%;
+}
+
 .container-fluid.home{
+    position: relative;
     background: #ffffff;
     box-shadow: 6px 5px 4px rgba(0, 0, 0, 0.13);
     border: 1px solid #dddddd;

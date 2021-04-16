@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 from .models import Room, Table, Task
-from .forms import CreateRoomForm
+from .forms import CreateRoomForm, CreateTableForm
 
 
 def home_view(request):
@@ -31,9 +31,16 @@ def rooms_view(request):
     return render(request, 'nessues_app/mono_rooms.html', {'title': title, 'content': content})
 
 def tables_view(request, key_id):
+    form = CreateTableForm(initial={'room': key_id})
+    if request.method == "POST":
+        form = CreateTableForm(request.POST)
+        if form.is_valid():
+            form.save()
+
     content = {
         'available_tables': Table.objects.filter(room=key_id),
-        'room': Room.objects.filter(id=key_id)
+        'room': Room.objects.filter(id=key_id),
+        'form': form
     }
 
     title = "tables"

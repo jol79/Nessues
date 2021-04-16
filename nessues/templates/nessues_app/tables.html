@@ -18,11 +18,17 @@
                 </div>
             </a>
         {% endfor %}
-        <a href="#">
+        <!-- <a href="#">
             <div class="data_cubes last-item">
                 <p>Create new table</p>
             </div>
-        </a>
+        </a> -->
+
+        <form method="POST">
+            {% csrf_token %}
+            {{ content.form.as_p }}
+            <button class="btn btn-primary" type="submit">Create new table</button>
+        </form>
 
     </div>
     
