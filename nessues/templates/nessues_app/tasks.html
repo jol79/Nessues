@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <div class="workspace-nav">
+        {% for table_name in content.table %}
+            <p>Available tasks for <b>{{ table_name }}</b> table</p>
+        {% endfor %}
+    </div>
+
+    <hr style="width: 53%; margin-left: 14.5%;">
+
+    <div class="container-monorooms-data">    
+        {% for data in content.available_tables %}
+            <a href="#">
+                <div class="data_cubes">
+                    <p>{{ data.name }}</p>
+                </div>
+            </a>
+        {% endfor %}
+        <!-- <a href="#">
+            <div class="data_cubes last-item">
+                <p>Create new table</p>
+            </div>
+        </a> -->
+
+        <form method="POST">
+            {% csrf_token %}
+            {{ content.form.as_p }}
+            <button class="btn btn-primary" type="submit">Create new task</button>
+        </form>
+
+    </div>
+    
+{% endblock content %}

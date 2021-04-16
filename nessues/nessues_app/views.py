@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
 
 from .models import Room, Table, Task
 from .forms import CreateRoomForm, CreateTableForm
@@ -21,6 +22,8 @@ def rooms_view(request):
         form = CreateRoomForm(request.POST)
         if form.is_valid():
             form.save()
+            form = CreateRoomForm()
+            return HttpResponseRedirect('/rooms')
 
     content = {
         'available_room_name': Room.objects.filter(owner=request.user.id),
@@ -36,6 +39,9 @@ def tables_view(request, key_id):
         form = CreateTableForm(request.POST)
         if form.is_valid():
             form.save()
+            form = CreateTableForm()
+            return HttpResponseRedirect(f'/tables/{key_id}')
+        
 
     content = {
         'available_tables': Table.objects.filter(room=key_id),
@@ -45,3 +51,8 @@ def tables_view(request, key_id):
 
     title = "tables"
     return render(request, 'nessues_app/tables.html', {'title': title, 'content': content})
+
+
+def tasks_view(request):
+    # form 
+    pass
