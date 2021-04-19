@@ -4,9 +4,37 @@
 {% block content %}
     <div class="workspace-nav">
         <p><b>{{ request.user }}</b> Workspace</p>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+            New room
+        </button>
     </div>
 
     <hr style="width: 53%; margin-left: 14.5%;">
+
+    <!-- Modal (create new room form) -->
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Create new room</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ content.form.as_p }}
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button class="btn btn-primary" type="submit">Create new room</button>
+            </form>
+            </div>
+        </div>
+        </div>
+    </div>
 
     <div class="container-monorooms-data">
         {% for data in content.available_rooms %}
@@ -16,17 +44,6 @@
                 </div>
             </a>
         {% endfor %}
-        <!-- <a href="/start_new_room" style="text-decoration: none; color: inherit;">
-            <div class="data_cubes last-item">
-                <p>Create new room</p>
-            </div>
-        </a> -->
-
-        <form method="POST">
-            {% csrf_token %}
-            {{ content.form.as_p }}
-            <button class="btn btn-primary" type="submit">Create new room</button>
-        </form>
     </div>
     
 {% endblock content %}
