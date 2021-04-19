@@ -3,6 +3,7 @@ from django.contrib.auth.models import User, Group
 
 
 class Room(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=21)
     date_created = models.DateField(auto_now_add=True)
     description = models.CharField(max_length=32)
@@ -16,6 +17,7 @@ class Room(models.Model):
     
 
 class Table(models.Model):
+    id = models.AutoField(primary_key=True)
     room = models.ForeignKey(
         Room,
         blank=True,   
@@ -39,6 +41,7 @@ class Table(models.Model):
 
 
 class Task(models.Model):
+    id = models.AutoField(primary_key=True)
     table = models.ForeignKey(
         Table,      
         on_delete=models.CASCADE

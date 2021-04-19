@@ -16,11 +16,9 @@
         </form>
            
         {% for data in content.available_tasks %}
-            <a href="#">
-                <div class="data_cubes tasks">
-                    <p>{{ data.text }}</p>
-                </div>
-            </a>
+            <div class="data_cubes tasks">
+                <p>{{ data.text }}</p>
+            </div>
         {% endfor %}
         <!-- <a href="#">
             <div class="data_cubes last-item">
