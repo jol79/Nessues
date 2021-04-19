@@ -134,6 +134,22 @@ a{
     padding-bottom: 0%;
 }
 
+/* tasks */
+.container.tasks{
+    display: flex;
+    flex-direction: column;  
+
+    padding-inline: 15%;
+}
+.data_cubes.tasks{
+    text-align: left;
+    padding-bottom: 0%;
+    padding-top: 1%;
+
+    background: #FAAD41; 
+    border-radius: 2px;
+}
+
 .footer{
     position: fixed;
     left: 0;

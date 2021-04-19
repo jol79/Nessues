@@ -8,13 +8,17 @@
         {% endfor %}
     </div>
 
-    <hr style="width: 53%; margin-left: 14.5%;">
-
-    <div class="container-monorooms-data">    
-        {% for data in content.available_tables %}
+    <div class="container tasks"> 
+        <form method="POST">
+            {% csrf_token %}
+            {{ content.form.as_p }}
+            <button class="btn btn-primary" type="submit">Create new task</button>
+        </form>
+           
+        {% for data in content.available_tasks %}
             <a href="#">
-                <div class="data_cubes">
-                    <p>{{ data.name }}</p>
+                <div class="data_cubes tasks">
+                    <p>{{ data.text }}</p>
                 </div>
             </a>
         {% endfor %}
@@ -23,13 +27,6 @@
                 <p>Create new table</p>
             </div>
         </a> -->
-
-        <form method="POST">
-            {% csrf_token %}
-            {{ content.form.as_p }}
-            <button class="btn btn-primary" type="submit">Create new task</button>
-        </form>
-
     </div>
     
 {% endblock content %}

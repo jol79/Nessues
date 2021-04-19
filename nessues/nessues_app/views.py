@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
 from .models import Room, Table, Task
-from .forms import CreateRoomForm, CreateTableForm
+from .forms import CreateRoomForm, CreateTableForm, CreateTaskForm
 
 
 def home_view(request):
@@ -26,7 +26,7 @@ def rooms_view(request):
             return HttpResponseRedirect('/rooms')
 
     content = {
-        'available_room_name': Room.objects.filter(owner=request.user.id),
+        'available_rooms': Room.objects.filter(owner=request.user.id),
         'form': form
     }
 
@@ -42,7 +42,6 @@ def tables_view(request, key_id):
             form = CreateTableForm()
             return HttpResponseRedirect(f'/tables/{key_id}')
         
-
     content = {
         'available_tables': Table.objects.filter(room=key_id),
         'room': Room.objects.filter(id=key_id),
@@ -53,6 +52,19 @@ def tables_view(request, key_id):
     return render(request, 'nessues_app/tables.html', {'title': title, 'content': content})
 
 
-def tasks_view(request):
-    # form 
-    pass
+def tasks_view(request, key_id):
+    form = CreateTaskForm(initial={'table': key_id, 'created_by': request.user.id})
+    if request.method == "POST":
+        form = CreateTaskForm(request.POST)
+        if form.is_valid():
+            form.save()
+            form = CreateTaskForm()
+            return HttpResponseRedirect(f'/tables/tasks/{key_id}')
+
+    content = {
+        'available_tasks': Task.objects.filter(table=key_id),
+        'form': form
+    }
+
+    title = "tasks"
+    return render(request, 'nessues_app/tasks.html', {'title': title, 'content': content})

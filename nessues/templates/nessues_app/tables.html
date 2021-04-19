@@ -12,7 +12,7 @@
 
     <div class="container-monorooms-data">    
         {% for data in content.available_tables %}
-            <a href="#">
+            <a href="{% url 'tasks' data.id %}">
                 <div class="data_cubes">
                     <p>{{ data.name }}</p>
                 </div>

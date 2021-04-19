@@ -8,9 +8,9 @@
 
     <hr style="width: 53%; margin-left: 14.5%;">
 
-    <div class="container-monorooms-data">    
-        {% for data in content.available_room_name %}
-            <a href="/tables/{{ data.id }}">
+    <div class="container-monorooms-data">
+        {% for data in content.available_rooms %}
+            <a href="{% url 'tables' data.id %}">
                 <div class="data_cubes">
                     <p>{{ data.name }}</p>
                 </div>

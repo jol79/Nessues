@@ -43,11 +43,11 @@
                         </div>
                     </div>
                     {% if user.is_authenticated %}
-                        <a class="btn btn-outline-secondary rounded-pill" style="margin-right: 1px;" href="/account">Account</a>
-                        <a class="btn btn-outline-secondary rounded-pill" style="margin-left: 1px;" href="/logout">Logout</a>
+                        <a class="btn btn-outline-secondary rounded-pill" style="margin-right: 1px;" href="{% url 'account' %}">Account</a>
+                        <a class="btn btn-outline-secondary rounded-pill" style="margin-left: 1px;" href="{% url 'logout' %}">Logout</a>
                     {% else %}
-                        <a class="btn btn-outline-secondary rounded-pill" style="margin-right: 1px;" href="/login">Sign in</a>
-                        <a class="btn btn-outline-secondary rounded-pill" style="margin-left: 1px;" href="/register">Sign up</a>
+                        <a class="btn btn-outline-secondary rounded-pill" style="margin-right: 1px;" href="{% url 'login' %}">Sign in</a>
+                        <a class="btn btn-outline-secondary rounded-pill" style="margin-left: 1px;" href="{% url 'register' %}">Sign up</a>
                     {% endif %}
                 </div>
             </nav>
