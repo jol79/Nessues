@@ -29,3 +29,9 @@ class CreateTaskForm(forms.ModelForm):
         fields = ['text', 'completed', 'created_by', 'table']
         widgets = {'completed': forms.HiddenInput(), 'created_by': forms.HiddenInput(), 'table': forms.HiddenInput()}
 
+class CompleteTaskForm(forms.ModelForm):
+
+    class Meta:
+        model = Task
+        fields = ['id', 'completed', 'table']
+        widgets = {'completed': forms.HiddenInput(), 'id': forms.HiddenInput(), 'table': forms.HiddenInput()}
