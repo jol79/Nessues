@@ -29,9 +29,9 @@ urlpatterns = [
     path('groups/', views.groups_view, name='groups'),
     path('rooms/', views.rooms_view, name='rooms'),
     path('tables/<int:key_id>/', views.tables_view, name='tables'),
-    path('tables/tasks/<int:key_id>/', views.tasks_view, name='tasks'),
+    # path('tables/tasks/<int:key_id>/', views.tasks_view, name='tasks'),
+    path ('tables/tasks/<int:key_id>/', views.TasksView.as_view(), name='tasks'),
     path('admin/', admin.site.urls),
 
     # path('login/', auth_views.LoginView.as_view(template_name='nessues_app_users/login.html'), name='login'),
-    # path('logout/', auth_views.LogoutView.as_view(template_name='nessues_app_users/logout.html'), name='logout'),
 ]

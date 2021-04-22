@@ -7,7 +7,7 @@
         <div class="new-task-form">
             <form method="POST">
                 {% csrf_token %}
-                {{ content.form.as_p }}
+                {{ create.as_p }}
                 <button class="btn btn-primary new-task-button" type="submit">Create new task</button>
             </form>
         </div>
@@ -15,11 +15,11 @@
         {% for data in content.available_tasks %}
         
             <!-- Modal (complete a task) -->
-            <div class="modal fade" id="exampleModalCenter{{ data.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal fade" id="ModalCenter{{ data.id }}" tabindex="-1" role="dialog" aria-labelledby="ModalCenterTitle" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Delete task</h5>
+                    <h5 class="modal-title" id="ModalLongTitle">Delete task</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -28,7 +28,7 @@
                         <p>Delete item {{ data.text }} with id {{ data.id }}</p>
                         <!-- Handle form to close the task here -->
                     </div>
-                    <div class="modal-footer">
+                    <div class="modal-footer"></div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button class="btn btn-primary" type="submit">Create new room</button>
                     </div>
@@ -41,7 +41,7 @@
                 <div class="data_cubes tasks">
                     <p>{{ data.text }}</p>
                     <div class="task-button">
-                        <a data-toggle="modal" data-target="#exampleModalCenter{{ data.id }}">
+                        <a data-toggle="modal" data-target="#ModalCenter{{ data.id }}">
                             <span>&#10003;</span>
                         </a>
                     </div>
