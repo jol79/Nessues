@@ -45,6 +45,14 @@ a{
     height: 70%;
     margin-top: 3.5%;
 }
+.container-data-auth{
+    padding: 30px;
+}
+.container-data{
+    padding: 30px;
+}
+
+/* home */
 .container-home-data{
     display: grid;
     grid-template-columns: 50% 50%;
@@ -53,22 +61,16 @@ a{
     margin-top: 5%;
     padding-inline: 15%;
 }
-.container-data-auth{
-    padding: 30px;
-}
-.container-data{
-    padding: 30px;
-}
+.container-home-infoblock{
+    display: grid;
+    grid-template-columns: auto max-content;
+    gap: 10%;
 
-.home-description{
-    background: yellow;
-
-    margin-right: 10%;
+    /* margin-top: 4%; */
+    padding-inline: 5%;
 }
-.home-img-guide{
-    background: green;
-
-    margin-left: 10%;
+.slogan{
+    text-align: left;
 }
 
 .account-page{
