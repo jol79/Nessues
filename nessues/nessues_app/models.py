@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.timezone import now
 from django.contrib.auth.models import User, Group
 
 
@@ -32,7 +33,7 @@ class Table(models.Model):
         default=None,    
         on_delete=models.CASCADE
     )
-    date_created = models.DateField(auto_now_add=True)
+    date_created = models.DateField(default=now)
     name = models.CharField(max_length=21)
     description = models.CharField(max_length=60)
 
@@ -47,9 +48,10 @@ class Task(models.Model):
         on_delete=models.CASCADE
     )
     text = models.CharField(max_length=120)
-    date_created = models.DateField(auto_now_add=True)
+    date_created = models.DateField(default=now)
     created_by = models.IntegerField(blank=False)
     completed = models.BooleanField(default=False)
+    completed_by = models.IntegerField(blank=False, null=True, default=None)
 
     def __str__(self):
         return self.text

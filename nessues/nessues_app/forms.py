@@ -30,16 +30,17 @@ class CreateTaskForm(forms.ModelForm):
         widgets = {'completed': forms.HiddenInput(), 'created_by': forms.HiddenInput(), 'table': forms.HiddenInput()}
 
 class UpdateTaskForm(forms.ModelForm):
+    text = CharField(max_length=120)
 
     class Meta: 
         model = Task
-        fields = ['id', 'completed', 'table']
+        fields = ['id', 'text', 'completed', 'table']
         widgets = {'id': forms.HiddenInput(), 'completed': forms.HiddenInput(), 'table': forms.HiddenInput()}
 
 class CompleteTaskForm(forms.ModelForm):
-    text = CharField(max_length=120)
+    id = IntegerField()
 
     class Meta:
         model = Task
-        fields = ['id', 'completed', 'table', 'text']
-        widgets = {'completed': forms.HiddenInput(), 'id': forms.HiddenInput(), 'table': forms.HiddenInput()}
+        fields = ['id', 'table', 'completed']
+        widgets = {'table': forms.HiddenInput(), 'completed': forms.HiddenInput()}

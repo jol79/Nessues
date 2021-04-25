@@ -77,23 +77,26 @@ class TasksView(TemplateView):
         return render(request, self.template_name, {'available_tasks': available_tasks, 'create': create, 'update': update, 'complete': complete})
 
     def post(self, request, *args, **kwargs):
-        create_form = self.create_task_class(request.POST)
-        update_form = self.update_task_class(request.POST)
-        complete_form = self.complete_task_class(request.POST)
+        create = self.create_task_class(request.POST)
+        update = self.update_task_class(request.POST)
+        complete = self.complete_task_class(request.POST)
 
-        if create_form.is_valid():
-            create_form.save()
+        if create.is_valid():
+            create.save()
             # messages.success(request, 'Task Successfully added')
             return HttpResponseRedirect(f'/tables/tasks/{self.kwargs["key_id"]}')
 
-        if update_form.is_valid():
-            create_form.save()
+        if update.is_valid():
+            update.save()
             messages.success(request, 'Task successfully updated')
             return HttpResponseRedirect(f'/tables/tasks/{self.kwargs["key_id"]}')
 
-        if complete_form.is_valid():
-            # task = Task.objects.get(id=)
-            complete_form.save()
+        if complete.is_valid():
+            id_to_close = complete.cleaned_data['id']
+            task_to_complete = Task.objects.get(id=id_to_close)
+            task_to_complete.delete()
+
+            messages.success(request, 'Task successfully completed')
             return HttpResponseRedirect(f'/tables/tasks/{self.kwargs["key_id"]}')
         
         return render(request, self.template_name, {'create': create, 'update': update, 'complete': complete})
