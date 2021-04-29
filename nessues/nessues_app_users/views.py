@@ -36,12 +36,9 @@ def login_view(request):
                 login(request, user)
                 messages.success(request, f'User {username} successfully authenticated!')
                 return redirect('home')
-            else:
-                messages.error(request, 'No user with provided credentials found')
-        else:
-            messages.error(request, 'Form is not valid')
-    else:
-        form = AuthenticationForm()
+            messages.error(request, 'No user with provided credentials found')
+        messages.error(request, 'Form is not valid')
+    form = AuthenticationForm()
     return render(request, 'nessues_app_users/login.html', {'form': form, 'title': 'login'})
 
 

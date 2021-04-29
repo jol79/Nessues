@@ -39,8 +39,10 @@ class UpdateTaskForm(forms.ModelForm):
 
 class CompleteTaskForm(forms.ModelForm):
     id = IntegerField()
+    # completed = BooleanField()
+    # created_by = IntegerField()
 
     class Meta:
         model = Task
-        fields = ['id', 'table', 'completed']
-        widgets = {'table': forms.HiddenInput(), 'completed': forms.HiddenInput()}
+        fields = ['id', 'table', 'completed', 'created_by']
+        widgets = {'table': forms.HiddenInput(), 'completed': forms.HiddenInput(), 'created_by': forms.HiddenInput()}

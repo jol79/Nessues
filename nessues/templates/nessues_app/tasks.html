@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load widget_tweaks %}
 
 {% block content %}
 
@@ -14,31 +14,48 @@
            
         {% for data in available_tasks %}
 
-            <!-- Modal complete task -->
-            <div class="modal fade" id="closeModal{{ data.id }}" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="ModalLabel">Complete task <b>{{ data.text }}?</b></h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+            <div class="close_task_modal">
+                <!-- Modal complete task -->
+                <div class="modal fade" id="closeModal{{ data.id }}" tabindex="-1" role="dialog" aria-labelledby="closeTaskArea" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="ModalLabel">Complete task <b>{{ data.text }}</b>?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
 
-                    <div class="modal-body">
-                        <form method="POST">
-                            {% csrf_token %}
-                            Please provide <b>{{ data.id }}</b> to close the task
-                            {{ complete }}
-                            <button class="btn btn-primary" type="submit">Complete task</button>
-                        </form>
-                    </div>
+                        <div class="modal-body" style="text-align: center;">
+                            <!--id = IntegerField()
+                                table = IntegerField()
+                                completed = BooleanField()
+                                created_by = IntegerField()-->
+                            <form method="POST">
+                                {% csrf_token %}
+                                <div class="form-group-id">
+                                    <label>{{ complete.id.label }}</label>
+                                    {% render_field complete.id name="id_id" %}
+                                </div>
+                                <div class="form-group">
+                                    {% render_field complete.table class="id_table" %}
+                                </div>
+                                <div class="form-group">
+                                    {% render_field complete.completed class="id_completed" %}
+                                </div>
+                                <div class="form-group">
+                                    {% render_field complete.created_by class="id_created_by" %}
+                                </div>
+                                
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Complete</button>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button class="btn btn-primary" type="submit">Complete task</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </div>
+                    </div>
                 </div>
             </div>
         
@@ -47,7 +64,7 @@
                 <div class="data_cubes tasks">
                     <p>{{ data.text }}</p>
                     <div class="task-button">
-                        <a data-toggle="modal" data-target="#closeModal{{ data.id }}">
+                        <a data-toggle="modal" data-target="#closeModal{{ data.id }}" class="completeTask">
                             <span>&#10003;</span>
                         </a>
                     </div>
@@ -55,6 +72,7 @@
             </div>
 
         {% endfor %}
+
     </div>
     
 {% endblock content %}

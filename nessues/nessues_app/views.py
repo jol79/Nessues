@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
 from django.contrib import messages
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 
 from .models import Room, Table, Task
 from .forms import CreateRoomForm, CreateTableForm, CreateTaskForm, UpdateTaskForm, CompleteTaskForm
@@ -74,7 +74,7 @@ class TasksView(TemplateView):
         update = self.update_task_class(initial={'table': self.kwargs['key_id'], 'created_by': self.request.user.id})
         complete = self.complete_task_class(initial={'table': self.kwargs['key_id'], 'created_by': self.request.user.id})
 
-        return render(request, self.template_name, {'available_tasks': available_tasks, 'create': create, 'update': update, 'complete': complete})
+        return render(request, self.template_name, {'url_arguments': {'key_id': self.kwargs['key_id'], 'current_user': self.request.user.id}, 'available_tasks': available_tasks, 'create': create, 'update': update, 'complete': complete})
 
     def post(self, request, *args, **kwargs):
         create = self.create_task_class(request.POST)
@@ -93,8 +93,12 @@ class TasksView(TemplateView):
 
         if complete.is_valid():
             id_to_close = complete.cleaned_data['id']
-            task_to_complete = Task.objects.get(id=id_to_close)
-            task_to_complete.delete()
+            try:    
+                task_to_complete = Task.objects.get(id=id_to_close) 
+                task_to_complete.delete()
+            except Exception:
+                messages.warning(request, 'Wrong id provided, try again')
+                return HttpResponseRedirect(f'/tables/tasks/{self.kwargs["key_id"]}')
 
             messages.success(request, 'Task successfully completed')
             return HttpResponseRedirect(f'/tables/tasks/{self.kwargs["key_id"]}')

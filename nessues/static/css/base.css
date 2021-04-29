@@ -159,6 +159,9 @@ a{
     margin-right: 5%;
     cursor: pointer;
 }
+.close_task_modal{
+    display: none;
+}
 
 .footer{
     position: fixed;
