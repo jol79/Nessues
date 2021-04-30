@@ -34,8 +34,8 @@
                             <form method="POST">
                                 {% csrf_token %}
                                 <div class="form-group-id">
-                                    <label>{{ complete.id.label }}</label>
-                                    {% render_field complete.id name="id_id" %}
+                                    <!-- <label>{{ complete.id.label }}</label> -->
+                                    {% render_field complete.id name="id_id" type="hidden" %}
                                 </div>
                                 <div class="form-group">
                                     {% render_field complete.table class="id_table" %}
@@ -47,11 +47,9 @@
                                     {% render_field complete.created_by class="id_created_by" %}
                                 </div>
                                 
-
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button class="btn btn-primary" type="submit">Complete task</button>
-                                </div>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button class="btn btn-primary" type="submit">Complete task</button>
+                        
                             </form>
                         </div>
                     </div>
@@ -64,7 +62,7 @@
                 <div class="data_cubes tasks">
                     <p>{{ data.text }}</p>
                     <div class="task-button">
-                        <a data-toggle="modal" data-target="#closeModal{{ data.id }}" class="completeTask">
+                        <a data-id="{{ data.id }}" data-toggle="modal" data-target="#closeModal{{ data.id }}" class="completeTask">
                             <span>&#10003;</span>
                         </a>
                     </div>
