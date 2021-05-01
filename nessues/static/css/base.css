@@ -118,11 +118,30 @@ a{
     padding-top: 2%;
     padding-left: 5%;
     padding-bottom: 10%;
+    cursor: pointer;
 
     background: #FAAD41; 
     border-radius: 2px;
     width: 100%;
     height: 100%;
+}
+.data_cubes.new_room{
+    background-color: #F0F2F5;
+    text-align: center;
+    padding-top: 10%;
+    padding-left: 0%;
+    padding-bottom: 2%;
+}
+.data_cubes.new_room:hover{
+    background-color: #E7E9ED;
+}
+.create_new_room-text{
+    font-size: 14px;
+    font-weight: lighter;
+    color: #434343;
+}
+.create_room_modal{
+    display: none;
 }
 
 /* tasks */

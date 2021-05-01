@@ -1,75 +1,71 @@
 {% extends "base.html" %}
 {% load widget_tweaks %}
 
+
 {% block content %}
 
-    <div class="container tasks"> 
+    <div class="container tasks">
         <div class="new-task-form">
             <form method="POST">
                 {% csrf_token %}
                 {{ create.as_p }}
                 <button class="btn btn-primary new-task-button" type="submit">Create new task</button>
             </form>
-        </div>
+    </div>
            
-        {% for data in available_tasks %}
+    {% for data in available_tasks %}
 
-            <div class="close_task_modal">
-                <!-- Modal complete task -->
-                <div class="modal fade" id="closeModal{{ data.id }}" tabindex="-1" role="dialog" aria-labelledby="closeTaskArea" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="ModalLabel">Complete task <b>{{ data.text }}</b>?</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-
-                        <div class="modal-body" style="text-align: center;">
-                            <!--id = IntegerField()
-                                table = IntegerField()
-                                completed = BooleanField()
-                                created_by = IntegerField()-->
-                            <form method="POST">
-                                {% csrf_token %}
-                                <div class="form-group-id">
-                                    <!-- <label>{{ complete.id.label }}</label> -->
-                                    {% render_field complete.id name="id_id" type="hidden" %}
-                                </div>
-                                <div class="form-group">
-                                    {% render_field complete.table class="id_table" %}
-                                </div>
-                                <div class="form-group">
-                                    {% render_field complete.completed class="id_completed" %}
-                                </div>
-                                <div class="form-group">
-                                    {% render_field complete.created_by class="id_created_by" %}
-                                </div>
-                                
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button class="btn btn-primary" type="submit">Complete task</button>
-                        
-                            </form>
-                        </div>
+        <div class="close_task_modal">
+            <!-- Modal complete task -->
+            <div class="modal fade" id="closeModal{{ data.id }}" tabindex="-1" role="dialog" aria-labelledby="closeTaskArea" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ModalLabel">Complete task <b>{{ data.text }}</b>?</h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                        </button>
                     </div>
+
+                    <div class="modal-body" style="text-align: center;">
+                        <form method="POST">
+                            {% csrf_token %}
+                            <div class="form-group-id">
+                                <!-- <label>{{ complete.id.label }}</label> -->
+                                {% render_field complete.id name="id_id" type="hidden" %}
+                            </div>
+                            <div class="form-group">
+                                {% render_field complete.table class="id_table" %}
+                            </div>
+                            <div class="form-group">
+                                {% render_field complete.completed class="id_completed" %}
+                            </div>
+                            <div class="form-group">
+                                {% render_field complete.created_by class="id_created_by" %}
+                            </div>
+                            
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button class="btn btn-primary" type="submit">Complete task</button>
+                    
+                        </form>
                     </div>
                 </div>
-            </div>
-        
-            <div style="display: flex; flex-direction: row;">
-                <p style="padding-top: 2%; color: #3F5060;">#{{ data.id }}</p>
-                <div class="data_cubes tasks">
-                    <p>{{ data.text }}</p>
-                    <div class="task-button">
-                        <a data-id="{{ data.id }}" data-toggle="modal" data-target="#closeModal{{ data.id }}" class="completeTask">
-                            <span>&#10003;</span>
-                        </a>
-                    </div>
                 </div>
             </div>
+        </div>
+    
+        <div style="display: flex; flex-direction: row;">
+            <p style="padding-top: 2%; color: #3F5060;">#{{ data.id }}</p>
+            <div class="data_cubes tasks">
+                <p>{{ data.text }}</p>
+                <div class="task-button">
+                    <a data-id="{{ data.id }}" data-toggle="modal" data-target="#closeModal{{ data.id }}" class="completeTask">
+                        <span>&#10003;</span>
+                    </a>
+                </div>
+            </div>
+        </div>
 
-        {% endfor %}
+    {% endfor %}
 
     </div>
     

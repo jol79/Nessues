@@ -27,9 +27,10 @@ urlpatterns = [
     path('register/', users_views.register_view, name='register'),
     path('account/', users_views.account_view, name='account'),
     path('groups/', views.groups_view, name='groups'),
-    path('rooms/', views.rooms_view, name='rooms'),
+    path('rooms/', views.RoomsView.as_view(), name='rooms'),
     path('tables/<int:key_id>/', views.tables_view, name='tables'),
-    path ('tables/tasks/<int:key_id>/', views.TasksView.as_view(), name='tasks'),
+    path('tables/tasks/<int:key_id>/', views.TasksView.as_view(), name='tasks'),
+    path('about/', views.about_view, name='about'),
     path('admin/', admin.site.urls),
 
 ]

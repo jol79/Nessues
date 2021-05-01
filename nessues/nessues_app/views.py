@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.views.generic import TemplateView, ListView
 
 from .models import Room, Table, Task
-from .forms import CreateRoomForm, CreateTableForm, CreateTaskForm, UpdateTaskForm, CompleteTaskForm
+from .forms import CreateRoomForm, CreateTableForm, CreateTaskForm, UpdateTaskForm, CompleteTaskForm, CloseRoomForm
 
 
 def home_view(request):
@@ -20,22 +20,55 @@ def groups_view(request):
     title = "groups"
     return render(request, 'nessues_app/groups.html', {'title': title, 'content': content})
 
-def rooms_view(request):
-    form = CreateRoomForm(initial={'owner': request.user.id})
-    if request.method == "POST":
-        form = CreateRoomForm(request.POST)
-        if form.is_valid():
-            form.save()
-            form = CreateRoomForm()
+
+"""
+ data that need to be rendered on the page: 
+    1) title
+    2) available_rooms
+    3) forms
+        new room
+        delete room
+        rename room
+"""
+class RoomsView(TemplateView):
+    template_name = 'nessues_app/mono_rooms.html'
+    title = 'room'
+    create_room_class = CreateRoomForm
+    close_room_class = CloseRoomForm
+
+    def get(self, request, *args, **kwargs):
+        available_rooms = Room.objects.filter(owner=self.request.user.id)
+        create = self.create_room_class(initial={'owner': self.request.user.id})
+        close = self.close_room_class()
+
+        return render(request, self.template_name, {'title': self.title, 'available_rooms': available_rooms, 'create': create, 'close': close})
+
+    def post(self, request, *args, **kwargs):
+        create = self.create_room_class(request.POST)
+        close = self.close_room_class(request.POST)
+
+        if create.is_valid():
+            print(f"CREATE ROOM FORM DATA: {create.cleaned_data}")
+            create.save()
+            return HttpResponseRedirect('/rooms')
+        else: 
+            messages.warning(request, "Something went wrong with create room form")
+            print(f"CREATE ROOM FORM DATA: {create.cleaned_data}")
             return HttpResponseRedirect('/rooms')
 
-    content = {
-        'available_rooms': Room.objects.filter(owner=request.user.id),
-        'form': form
-    }
+        if close.is_valid(): 
+            id_to_close = close.cleaned_data['id']
+            try:    
+                room_to_close = Room.objects.get(id=id_to_close) 
+                room_to_close.delete()
+            except Exception:
+                messages.warning(request, "Wrong id given, we don't have room with that id")
+                return HttpResponseRedirect(f'/tables/tasks/{self.kwargs["key_id"]}')
+            messages.success(request, "Room successfully closed!")
 
-    title = "rooms"
-    return render(request, 'nessues_app/mono_rooms.html', {'title': title, 'content': content})
+        return render(request, self.template_name, {'create': create, 'close': close})
+
+
 
 def tables_view(request, key_id):
     form = CreateTableForm(initial={'room': key_id})
@@ -54,6 +87,28 @@ def tables_view(request, key_id):
 
     title = "tables"
     return render(request, 'nessues_app/tables.html', {'title': title, 'content': content})
+
+
+# """
+#  data that need to be rendered on the page: 
+#     1) title
+#     2) available_tables
+#     3) current_room
+#     4) forms
+#         new table
+#         delete table
+#         rename table
+# """
+# class TablesView(TemplateView):
+#     template_name = 'nessues_app/tables.html'
+#     create_table_class = CreateTableForm
+#     close_table_class = CloseTableForm
+
+#     def get(self, request, *args, **kwargs):
+#         available_tables = Table.objects.filter(room=self.kwargs['key_id'])
+#         create = self.create_table_class()
+
+#         return render(request, self.template_name, {''})
 
 
 """
@@ -104,3 +159,10 @@ class TasksView(TemplateView):
             return HttpResponseRedirect(f'/tables/tasks/{self.kwargs["key_id"]}')
         
         return render(request, self.template_name, {'create': create, 'update': update, 'complete': complete})
+
+
+def about_view(request):
+    content = {  }
+
+    title = "about"
+    return render(request, 'nessues_app/about.html', {'title': title, 'content': content})

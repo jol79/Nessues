@@ -11,6 +11,13 @@ class CreateRoomForm(forms.ModelForm):
         model = Room
         fields = ['name', 'description', 'owner']
         widgets = {'owner': forms.HiddenInput()}
+    
+class CloseRoomForm(forms.ModelForm):
+    id = IntegerField()
+
+    class Meta: 
+        model = Room
+        fields = ['id']
 
 class CreateTableForm(forms.ModelForm):
     name = CharField(max_length=21)
