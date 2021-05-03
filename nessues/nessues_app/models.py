@@ -74,5 +74,5 @@ class Nessues_Group_User(models.Model):
     group = models.ForeignKey(Nessues_Group, on_delete=models.CASCADE)
     role = models.IntegerField(blank=False, default=None) # 1-Owner, 2-Admin, 3-Common
 
-    def __int__(self): 
-        return self.group
+    def __str__(self):
+        return self.group.name

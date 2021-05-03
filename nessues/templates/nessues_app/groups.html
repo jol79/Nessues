@@ -3,6 +3,40 @@
 
 {% block content %}
 
-    <p>List of available groups</p>
+    <div class="workspace-nav">
+        <p><b>group_name_here</b> group</p>
+    </div>
+
+    <hr style="width: 53%; margin-left: 14.5%;">
+
+    <div class="container-groups-data">
+        
+            {% for data in available_groups %}
+                <div class="data_cubes groups">
+                    {% if data.role == 1 %}
+                        <div class="group-name">
+                            {{ data.group.name }}
+                        </div>
+                        <div class="group-role">
+                            role: <b>owner</b>
+                        </div>
+                    {% elif data.role == 2 %}
+                        <div class="group-name">
+                            {{ data.group.name }}
+                        </div>
+                        <div class="group-role">
+                            role: <b>admin</b>
+                        </div>
+                    {% elif data.role == 3 %}
+                        <div class="group-name">
+                            {{ data.group.name }}
+                        </div>
+                        <div class="group-role">
+                            role: <b>common user</b>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+    </div>
 
 {% endblock content %}

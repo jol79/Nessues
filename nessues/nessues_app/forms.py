@@ -3,6 +3,7 @@ from django.forms import CharField, HiddenInput, BooleanField, IntegerField
 from .models import Room, Table, Task
 
 
+# rooms
 class CreateRoomForm(forms.ModelForm):
     name = CharField(max_length=21)
     description = CharField(max_length=32)
@@ -19,6 +20,24 @@ class CloseRoomForm(forms.ModelForm):
         model = Room
         fields = ['id']
 
+# groups
+class CreateRoomForm(forms.ModelForm):
+    name = CharField(max_length=21)
+    description = CharField(max_length=32)
+
+    class Meta:
+        model = Room
+        fields = ['name', 'description', 'owner']
+        widgets = {'owner': forms.HiddenInput()}
+    
+class CloseRoomForm(forms.ModelForm):
+    id = IntegerField()
+
+    class Meta: 
+        model = Room
+        fields = ['id']
+
+# tables
 class CreateTableForm(forms.ModelForm):
     name = CharField(max_length=21)
     description = CharField(max_length=60)
@@ -28,6 +47,7 @@ class CreateTableForm(forms.ModelForm):
         fields = ['name', 'description', 'room', 'group']
         widgets = {'room': forms.HiddenInput(), 'group': forms.HiddenInput()}
 
+# tasks
 class CreateTaskForm(forms.ModelForm): 
     text = CharField(max_length=120)
 
