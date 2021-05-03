@@ -58,3 +58,21 @@ class Task(models.Model):
     def __str__(self):
         return self.text
     
+
+class Nessues_Group(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=21)
+    users = models.ManyToManyField(User, through='Nessues_Group_User')
+
+    def __str__(self): 
+        return self.name
+
+
+class Nessues_Group_User(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    group = models.ForeignKey(Nessues_Group, on_delete=models.CASCADE)
+    role = models.IntegerField(blank=False, default=None) # 1-Owner, 2-Admin, 3-Common
+
+    def __int__(self): 
+        return self.group
