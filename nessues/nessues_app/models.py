@@ -7,7 +7,7 @@ class Room(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=21)
     date_created = models.DateField(auto_now_add=True)
-    description = models.CharField(max_length=32)
+    description = models.CharField(max_length=32, blank=True, null=True)
     owner = models.ForeignKey(
         User, 
         on_delete=models.CASCADE
@@ -37,7 +37,7 @@ class Table(models.Model):
     )
     date_created = models.DateField(default=now)
     name = models.CharField(max_length=21)
-    description = models.CharField(max_length=60)
+    description = models.CharField(max_length=60, blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -62,7 +62,8 @@ class Task(models.Model):
 class Nessues_Group(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=21)
-    users = models.ManyToManyField(User, through='Nessues_Group_User')
+    user = models.ManyToManyField(User, through='Nessues_Group_User')
+    description = models.CharField(max_length=120, blank=True, null=True)
 
     def __str__(self): 
         return self.name

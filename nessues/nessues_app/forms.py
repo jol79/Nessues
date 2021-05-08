@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import CharField, HiddenInput, BooleanField, IntegerField
-from .models import Room, Table, Task
+from .models import Room, Table, Task, Nessues_Group, Nessues_Group_User
 
 
 # rooms
@@ -21,20 +21,20 @@ class CloseRoomForm(forms.ModelForm):
         fields = ['id']
 
 # groups
-class CreateRoomForm(forms.ModelForm):
+class CreateGroupForm(forms.ModelForm):
     name = CharField(max_length=21)
     description = CharField(max_length=32)
 
     class Meta:
-        model = Room
-        fields = ['name', 'description', 'owner']
-        widgets = {'owner': forms.HiddenInput()}
+        model = Nessues_Group_User
+        fields = ['name', 'description', 'user']
+        widgets = {'user': forms.HiddenInput()}
     
-class CloseRoomForm(forms.ModelForm):
+class CloseGroupForm(forms.ModelForm):
     id = IntegerField()
 
     class Meta: 
-        model = Room
+        model = Nessues_Group_User
         fields = ['id']
 
 # tables
@@ -66,8 +66,6 @@ class UpdateTaskForm(forms.ModelForm):
 
 class CompleteTaskForm(forms.ModelForm):
     id = IntegerField()
-    # completed = BooleanField()
-    # created_by = IntegerField()
 
     class Meta:
         model = Task

@@ -6,17 +6,12 @@ from django.contrib import messages
 from django.views.generic import TemplateView, ListView
 
 from .models import Room, Table, Task, Nessues_Group, Nessues_Group_User
-from .forms import CreateRoomForm, CreateTableForm, CreateTaskForm, UpdateTaskForm, CompleteTaskForm, CloseRoomForm
+from .forms import CreateRoomForm, CreateTableForm, CreateTaskForm, UpdateTaskForm, CompleteTaskForm, CloseRoomForm, CreateGroupForm, CloseGroupForm
 
 
 def home_view(request):
     title = "home"
     return render(request, 'nessues_app/home.html', {'title': title})
-
-def groups_view(request):
-    available_groups = Nessues_Group_User.objects.filter(user=request.user.id)
-
-    return render(request, 'nessues_app/groups.html', {'available_groups': available_groups})
 
 
 """
@@ -26,43 +21,29 @@ def groups_view(request):
     3) forms
         new group
 """
-# class GroupsView(TemplateView):
-#     template_name = 'nessues_app/groups.html'
-#     title = 'group'
-#     create_group_class = CreateGroupForm
-#     close_group_class = CloseGroupForm
+class GroupsView(TemplateView):
+    template_name = 'nessues_app/groups.html'
+    title = 'group'
+    create_group_class = CreateGroupForm
 
-#     def get(self, request, *args, **kwargs):
-#         available_groups = Nessues_Group_User.objects.filter(user=self.request.user.id)
-#         create = self.create_room_class(initial={'owner': self.request.user.id})
-#         close = self.close_room_class()
+    def get(self, request, *args, **kwargs):
+        available_groups = Nessues_Group_User.objects.filter(user=self.request.user.id)
+        create = self.create_group_class(initial={'user': self.request.user.id})
+        return render(request, self.template_name, {'available_groups': available_groups, 'create': create})
 
-#         return render(request, self.template_name, {'title': self.title, 'available_rooms': available_rooms, 'create': create, 'close': close})
+    def post(self, request, *args, **kwargs):
+        create = self.create_group_class(request.POST)
 
-#     def post(self, request, *args, **kwargs):
-#         create = self.create_room_class(request.POST)
-#         close = self.close_room_class(request.POST)
-
-#         if create.is_valid():
-#             print(f"CREATE ROOM FORM DATA: {create.cleaned_data}")
-#             create.save()
-#             return HttpResponseRedirect('/rooms')
-#         else: 
-#             messages.warning(request, "Something went wrong with create room form")
-#             print(f"CREATE ROOM FORM DATA: {create.cleaned_data}")
-#             return HttpResponseRedirect('/rooms')
-
-#         if close.is_valid(): 
-#             id_to_close = close.cleaned_data['id']
-#             try:    
-#                 room_to_close = Room.objects.get(id=id_to_close) 
-#                 room_to_close.delete()
-#             except Exception:
-#                 messages.warning(request, "Wrong id given, we don't have room with that id")
-#                 return HttpResponseRedirect(f'/tables/tasks/{self.kwargs["key_id"]}')
-#             messages.success(request, "Room successfully closed!")
-
-#         return render(request, self.template_name, {'create': create, 'close': close})
+        if create.is_valid():
+            print(f"FORM DATA: {create}")
+            create.save()
+            messages.success(request, "Group added")
+            return HttpResponseRedirect('/groups')
+        else:
+            print(f"Something went wrong, form: {create}")
+            messages.warning(request, "Something wrong in the form")
+            return HttpResponseRedirect('/groups')
+        return render(request, self.template_name, {'create': create})
 
 
 """
@@ -74,14 +55,13 @@ def groups_view(request):
 """
 class RoomsView(TemplateView):
     template_name = 'nessues_app/mono_rooms.html'
-    title = 'room'
+    title = 'rooms'
     create_room_class = CreateRoomForm
-    close_room_class = CloseRoomForm
 
     def get(self, request, *args, **kwargs):
         available_rooms = Room.objects.filter(owner=self.request.user.id)
         create = self.create_room_class(initial={'owner': self.request.user.id})
-        close = self.close_room_class()
+        close = self.close_room_class(initial={'id': self.kwargs['key_id']})
 
         return render(request, self.template_name, {'title': self.title, 'available_rooms': available_rooms, 'create': create, 'close': close})
 
@@ -94,41 +74,39 @@ class RoomsView(TemplateView):
             create.save()
             return HttpResponseRedirect('/rooms')
         else: 
-            messages.warning(request, "Something went wrong with create room form")
+            messages.warning(request, "Something went wrong while creating room")
             print(f"CREATE ROOM FORM DATA: {create.cleaned_data}")
             return HttpResponseRedirect('/rooms')
 
-        if close.is_valid(): 
-            id_to_close = close.cleaned_data['id']
-            try:    
-                room_to_close = Room.objects.get(id=id_to_close) 
-                room_to_close.delete()
-            except Exception:
-                messages.warning(request, "Wrong id given, we don't have room with that id")
-                return HttpResponseRedirect(f'/tables/tasks/{self.kwargs["key_id"]}')
-            messages.success(request, "Room successfully closed!")
-
-        return render(request, self.template_name, {'create': create, 'close': close})
+        return render(request, self.template_name, {'create': create})
 
 
+class TablesView(TemplateView):
+    template_name = 'nessues_app/tables.html'
+    title = 'tables'
+    create_table_class = CreateTableForm
+    close_room_class = CloseRoomForm
 
-def tables_view(request, key_id):
-    form = CreateTableForm(initial={'room': key_id})
-    if request.method == "POST":
-        form = CreateTableForm(request.POST)
-        if form.is_valid():
-            form.save()
-            form = CreateTableForm()
-            return HttpResponseRedirect(f'/tables/{key_id}')
+    def get(self, request, *args, **kwargs):
+        available_tables = Table.objects.filter(room=self.kwargs['key_id'])
+        create = self.create_table_class(initial={'room': self.kwargs['key_id']})
+        close = self.close_room_class(initial={'room': self.kwargs['key_id']})
+
+        return render(request, self.template_name, {'title': self.title, 'available_tables': available_tables, 'create': create, 'close': close})
+
+    def post(self, request, *args, **kwargs):
+        create = self.create_table_class(request.POST)
+        close = self.close_room_class(request.POST)
+
+        if create.is_valid():
+            print(f"CREATE NEW TABLE FORM DATA: {create}")
+            create.save()
+            return HttpResponseRedirect(f'/tables/{self.kwargs["key_id"]}')
+        else:
+            messages.warning(request, "Something went wrong while creating table")
+            return HttpResponseRedirect(f'/tables/{self.kwargs["key_id"]}')
         
-    content = {
-        'available_tables': Table.objects.filter(room=key_id),
-        'room': Room.objects.filter(id=key_id),
-        'form': form
-    }
-
-    title = "tables"
-    return render(request, 'nessues_app/tables.html', {'title': title, 'content': content})
+        return render(request, self.template_name, {'create': create, 'close': close})
 
 
 # """
