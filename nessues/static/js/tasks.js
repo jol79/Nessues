@@ -1,4 +1,4 @@
-// function to open close task modal
+// open close task modal
 $(function(){
     $(".completeTask").click(function(){
         $('.close_task_modal').show();

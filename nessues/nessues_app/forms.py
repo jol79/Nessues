@@ -13,7 +13,7 @@ class CreateRoomForm(forms.ModelForm):
         fields = ['name', 'description', 'owner']
         widgets = {'owner': forms.HiddenInput()}
     
-class CloseRoomForm(forms.ModelForm):
+class DeleteRoomForm(forms.ModelForm):
     id = IntegerField()
 
     class Meta: 

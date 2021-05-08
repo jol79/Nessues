@@ -5,6 +5,7 @@
 {% block content %}
     <div class="workspace-nav">
         <p>Available tables for <b>{{ room_name }}</b> room</p>
+        <a data-id="{{ current_room }}" data-toggle="modal" data-target="#deleteRoomModal" class="deleteRoom" style="color: red;">Delete room</a>
     </div>
 
     <hr style="width: 53%; margin-left: 14.5%;">
@@ -53,6 +54,36 @@
                         
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button class="btn btn-primary" type="submit">Create table</button>
+
+                    </form>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal delete room form -->
+    <div class="delete_room_modal">
+        <div class="modal fade" id="deleteRoomModal" tabindex="-1" role="dialog" aria-labelledby="deleteRoomForm" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalLabel">Are you sure that you wanna delete this room?</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+
+                <div class="modal-body" style="text-align: center;">
+                    <h6>Provide {{ current_room }} to confirm the action</h6>
+
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-group-id">
+                            {% render_field delete.id name="id_id" %}
+                        </div>
+                        
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" type="submit">Delete room</button>
 
                     </form>
                 </div>

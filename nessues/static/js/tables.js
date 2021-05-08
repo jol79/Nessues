@@ -1,6 +1,14 @@
-// function to open create table modal
+// open create table modal
 $(function(){
     $(".createTable").click(function(){
         $('.create_table_modal').show();
+    })
+});
+
+$(function(){
+    $(".deleteRoom").click(function(){
+        $('.delete_room_modal').show();
+        var id = $(this).data('id');
+        $(".form-group-id #id-id").val(id);
     })
 });

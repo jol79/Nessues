@@ -30,7 +30,6 @@
                         <form method="POST">
                             {% csrf_token %}
                             <div class="form-group-id">
-                                <!-- <label>{{ complete.id.label }}</label> -->
                                 {% render_field complete.id name="id_id" type="hidden" %}
                             </div>
                             <div class="form-group">
