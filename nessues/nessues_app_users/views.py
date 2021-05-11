@@ -3,7 +3,7 @@ from django.contrib import messages
 
 from .forms import UserRegisterForm
 from .decorators import unauthenticated, authenticated
-from nessues_app.models import Room, Task
+from nessues_app.models import Room, Task, Nessues_Group_User
 
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.forms import AuthenticationForm
@@ -54,9 +54,11 @@ def account_view(request):
     # get_list_or_404(Room, owner=request.user.id)
     
     rooms_stats = Room.objects.filter(owner=request.user.id).count()
+    groups_stats = Nessues_Group_User.objects.filter(user=request.user.id).count()
 
     content = {
-        'rooms_stats': rooms_stats
+        'rooms_stats': rooms_stats,
+        'groups_stats': groups_stats
     }
 
     return render(request, 'nessues_app_users/account.html', context=content)

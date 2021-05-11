@@ -28,7 +28,7 @@ class GroupsView(TemplateView):
 
     def get(self, request, *args, **kwargs):
         available_groups = Nessues_Group_User.objects.filter(user=self.request.user.id)
-        create = self.create_group_class(initial={'user': self.request.user.id})
+        create = self.create_group_class()
         return render(request, self.template_name, {'available_groups': available_groups, 'create': create})
 
     def post(self, request, *args, **kwargs):
@@ -36,6 +36,9 @@ class GroupsView(TemplateView):
 
         if create.is_valid():
             create.save()
+            current_group = Nessues_Group.objects.get(name=create.cleaned_data['name'])
+            current_group.users.add(self.request.user.id, through_defaults={'role': 1})
+            current_group.save()
             messages.success(request, "Group added")
             return HttpResponseRedirect('/groups')
         else:

@@ -62,7 +62,7 @@ class Task(models.Model):
 class Nessues_Group(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=21)
-    user = models.ManyToManyField(User, through='Nessues_Group_User')
+    users = models.ManyToManyField(User, through='Nessues_Group_User')
     description = models.CharField(max_length=120, blank=True, null=True)
 
     def __str__(self): 

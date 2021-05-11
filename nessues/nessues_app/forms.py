@@ -26,10 +26,9 @@ class CreateGroupForm(forms.ModelForm):
     description = CharField(max_length=32)
 
     class Meta:
-        model = Nessues_Group_User
-        fields = ['name', 'description', 'user']
-        widgets = {'user': forms.HiddenInput()}
-    
+        model = Nessues_Group
+        fields = ['name', 'description']
+# to fix
 class CloseGroupForm(forms.ModelForm):
     id = IntegerField()
 
