@@ -42,7 +42,7 @@ class GroupsView(TemplateView):
             messages.success(request, "Group added")
             return HttpResponseRedirect('/groups')
         else:
-            messages.warning(request, "Something wrong in the form")
+            messages.warning(request, "Group with the same name already exists")
             return HttpResponseRedirect('/groups')
         return render(request, self.template_name, {'create': create})
 
@@ -118,7 +118,6 @@ class TablesView(TemplateView):
         delete = self.delete_room_class(request.POST)
 
         if create.is_valid():
-            print(f'DATA TO SUBMIT: {create.cleaned_data}')
             create.save()
             return HttpResponseRedirect(f"/tables/{self.kwargs['redirected_from']}/{self.kwargs['key_id']}")
         

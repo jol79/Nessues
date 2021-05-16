@@ -21,7 +21,7 @@ class Room(models.Model):
 
 class Nessues_Group(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=21)
+    name = models.CharField(max_length=21, unique=True)
     users = models.ManyToManyField(User, through='Nessues_Group_User')
     description = models.CharField(max_length=120, blank=True, null=True)
 
