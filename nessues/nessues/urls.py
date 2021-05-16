@@ -28,8 +28,8 @@ urlpatterns = [
     path('account/', users_views.account_view, name='account'),
     path('groups/', views.GroupsView.as_view(), name='groups'),
     path('rooms/', views.RoomsView.as_view(), name='rooms'),
-    path('tables/<int:key_id>/', views.TablesView.as_view(), name='tables'),
-    path('tables/tasks/<int:key_id>/', views.TasksView.as_view(), name='tasks'),
+    path('tables/<str:redirected_from>/<int:key_id>/', views.TablesView.as_view(), name='tables'),
+    path('tasks/<int:key_id>/', views.TasksView.as_view(), name='tasks'),
     path('about/', views.about_view, name='about'),
     path('admin/', admin.site.urls),
 

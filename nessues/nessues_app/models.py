@@ -19,6 +19,26 @@ class Room(models.Model):
         ordering = ['id']
     
 
+class Nessues_Group(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=21)
+    users = models.ManyToManyField(User, through='Nessues_Group_User')
+    description = models.CharField(max_length=120, blank=True, null=True)
+
+    def __str__(self): 
+        return str(self.id)
+
+
+class Nessues_Group_User(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    group = models.ForeignKey(Nessues_Group, on_delete=models.CASCADE)
+    role = models.IntegerField(blank=False, default=None) # 1-Owner, 2-Admin, 3-Common
+
+    def __str__(self):
+        return self.group.name
+
+    
 class Table(models.Model):
     id = models.AutoField(primary_key=True)
     room = models.ForeignKey(
@@ -29,7 +49,7 @@ class Table(models.Model):
         on_delete=models.CASCADE
     )
     group = models.ForeignKey(
-        Group,
+        Nessues_Group,
         blank=True,
         null=True,  
         default=None,    
@@ -40,7 +60,7 @@ class Table(models.Model):
     description = models.CharField(max_length=60, blank=True, null=True)
 
     def __str__(self):
-        return self.name
+        return self.name 
 
 
 class Task(models.Model):
@@ -57,23 +77,3 @@ class Task(models.Model):
 
     def __str__(self):
         return self.text
-    
-
-class Nessues_Group(models.Model):
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=21)
-    users = models.ManyToManyField(User, through='Nessues_Group_User')
-    description = models.CharField(max_length=120, blank=True, null=True)
-
-    def __str__(self): 
-        return self.name
-
-
-class Nessues_Group_User(models.Model):
-    id = models.AutoField(primary_key=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    group = models.ForeignKey(Nessues_Group, on_delete=models.CASCADE)
-    role = models.IntegerField(blank=False, default=None) # 1-Owner, 2-Admin, 3-Common
-
-    def __str__(self):
-        return self.group.name

@@ -83,22 +83,44 @@ class TablesView(TemplateView):
     title = 'tables'
     create_table_class = CreateTableForm
     delete_room_class = DeleteRoomForm
+    close_group_class = CloseGroupForm
 
     def get(self, request, *args, **kwargs):
-        available_tables = Table.objects.filter(room=self.kwargs['key_id'])
-        current_room = Room.objects.get(id=self.kwargs['key_id'])
-        create = self.create_table_class(initial={'room': self.kwargs['key_id']})
-        delete = self.delete_room_class(initial={'room': self.kwargs['key_id']})
-
-        return render(request, self.template_name, {'title': self.title, 'current_room': current_room.id, 'available_tables': available_tables, 'create': create, 'delete': delete})
+        if self.kwargs['redirected_from'] == 'group':
+            try:
+                current = Nessues_Group.objects.get(id=self.kwargs['key_id'])
+                try:
+                    available_tables = Table.objects.filter(group=current.id)
+                except:
+                    available_tables = None
+                create = self.create_table_class(initial={'group': self.kwargs['key_id']})
+                delete = self.close_group_class(initial={'group': self.kwargs['key_id']})
+            except:
+                pass
+        
+        if self.kwargs['redirected_from'] == 'room':
+            try:
+                current = Room.objects.get(id=self.kwargs['key_id'])
+                try:
+                    available_tables = Table.objects.filter(room=current.id)
+                except:
+                    available_tables = None
+                create = self.create_table_class(initial={'room': self.kwargs['key_id']})
+                delete = self.delete_room_class(initial={'room': self.kwargs['key_id']})
+            except:
+                pass
+        
+        return render(request, self.template_name, {'title': self.title, 'current_type': self.kwargs['redirected_from'], 'current': current.id, 'current_name': current.name, 'available_tables': available_tables, 'create': create, 'delete': delete})
+        
 
     def post(self, request, *args, **kwargs):
         create = self.create_table_class(request.POST)
         delete = self.delete_room_class(request.POST)
 
         if create.is_valid():
+            print(f'DATA TO SUBMIT: {create.cleaned_data}')
             create.save()
-            return HttpResponseRedirect(f'/tables/{self.kwargs["key_id"]}')
+            return HttpResponseRedirect(f"/tables/{self.kwargs['redirected_from']}/{self.kwargs['key_id']}")
         
         if delete.is_valid():
             id_to_delete = delete.cleaned_data['id']
@@ -147,12 +169,12 @@ class TasksView(TemplateView):
         if create.is_valid():
             create.save()
             # messages.success(request, 'Task Successfully added')
-            return HttpResponseRedirect(f'/tables/tasks/{self.kwargs["key_id"]}')
+            return HttpResponseRedirect(f'/tasks/{self.kwargs["key_id"]}')
 
         if update.is_valid():
             update.save()
             messages.success(request, 'Task successfully updated')
-            return HttpResponseRedirect(f'/tables/tasks/{self.kwargs["key_id"]}')
+            return HttpResponseRedirect(f'/tasks/{self.kwargs["key_id"]}')
 
         if complete.is_valid():
             id_to_close = complete.cleaned_data['id']
@@ -161,10 +183,10 @@ class TasksView(TemplateView):
                 task_to_complete.delete()
             except Exception:
                 messages.warning(request, 'Wrong id provided, try again')
-                return HttpResponseRedirect(f'/tables/tasks/{self.kwargs["key_id"]}')
+                return HttpResponseRedirect(f'/tasks/{self.kwargs["key_id"]}')
 
             messages.success(request, 'Task successfully completed')
-            return HttpResponseRedirect(f'/tables/tasks/{self.kwargs["key_id"]}')
+            return HttpResponseRedirect(f'/tasks/{self.kwargs["key_id"]}')
         
         return render(request, self.template_name, {'create': create, 'update': update, 'complete': complete})
 
