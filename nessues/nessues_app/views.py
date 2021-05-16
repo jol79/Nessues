@@ -93,7 +93,7 @@ class TablesView(TemplateView):
                     available_tables = Table.objects.filter(group=current.id)
                 except:
                     available_tables = None
-                create = self.create_table_class(initial={'group': self.kwargs['key_id']})
+                create = self.create_table_class(initial={'group': current.id})
                 delete = self.close_group_class(initial={'group': self.kwargs['key_id']})
             except:
                 pass

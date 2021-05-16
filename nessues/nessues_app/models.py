@@ -50,9 +50,9 @@ class Table(models.Model):
     )
     group = models.ForeignKey(
         Nessues_Group,
-        blank=True,
-        null=True,  
-        default=None,    
+        blank=True,   
+        null=True, 
+        default=None,  
         on_delete=models.CASCADE
     )
     date_created = models.DateField(default=now)
