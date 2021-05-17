@@ -12,7 +12,7 @@
 
     <div class="container-groups-data">
         {% for data in available_groups %}
-            <a href="{% url 'tables' redirected_from='group' key_id=data.id %}">
+            <a href="{% url 'tables' redirected_from='group' key_id=data.group.id %}">
                 <div class="data_cubes groups">
                     {% if data.role == 1 %}
                         <div class="group-name">

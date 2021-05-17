@@ -88,7 +88,7 @@ class TablesView(TemplateView):
     def get(self, request, *args, **kwargs):
         if self.kwargs['redirected_from'] == 'group':
             try:
-                current = Nessues_Group.objects.get(id=self.kwargs['key_id'])
+                current = Nessues_Group.objects.get(id=(self.kwargs['key_id']))
                 try:
                     available_tables = Table.objects.filter(group=current.id)
                 except:
