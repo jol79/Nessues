@@ -4,6 +4,7 @@ from django.http import HttpResponseRedirect
 
 from django.contrib import messages
 from django.views.generic import TemplateView, ListView
+from django.contrib.auth.decorators import login_required
 
 from .models import Room, Table, Task, Nessues_Group, Nessues_Group_User
 from .forms import CreateRoomForm, CreateTableForm, CreateTaskForm, UpdateTaskForm, CompleteTaskForm, DeleteRoomForm, CreateGroupForm, CloseGroupForm

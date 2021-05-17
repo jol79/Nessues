@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.contrib.auth.decorators import login_required
 
 import nessues_app.views as views
 import nessues_app_users.views as users_views
@@ -26,11 +27,11 @@ urlpatterns = [
     path('logout/', users_views.logout_view, name='logout'),
     path('register/', users_views.register_view, name='register'),
     path('account/', users_views.account_view, name='account'),
-    path('groups/', views.GroupsView.as_view(), name='groups'),
-    path('rooms/', views.RoomsView.as_view(), name='rooms'),
-    path('tables/<str:redirected_from>/<int:key_id>/', views.TablesView.as_view(), name='tables'),
-    path('tasks/<int:key_id>/', views.TasksView.as_view(), name='tasks'),
-    path('about/', views.about_view, name='about'),
+    path('groups/', login_required(views.GroupsView.as_view()), name='groups'),
+    path('rooms/', login_required(views.RoomsView.as_view()), name='rooms'),
+    path('tables/<str:redirected_from>/<int:key_id>/', login_required(views.TablesView.as_view()), name='tables'),
+    path('tasks/<int:key_id>/', login_required(views.TasksView.as_view()), name='tasks'),
+    path('about/', login_required(views.about_view), name='about'),
     path('admin/', admin.site.urls),
 
 ]
