@@ -62,16 +62,36 @@ a{
     margin-top: 5%;
     padding-inline: 15%;
 }
-.container-home-infoblock{
-    display: grid;
-    grid-template-columns: auto max-content;
-    gap: 10%;
-
-    /* margin-top: 4%; */
-    padding-inline: 5%;
+.slogan-block{
+    text-align: left;
 }
 .slogan{
-    text-align: left;
+    font-size: 56px;
+    font-weight: bold;
+}
+.platform-info{
+    font-size: 20px;
+    font-weight: lighter;
+}
+.btn-login{
+    margin-right: 5px;
+}
+.btn-register{
+    margin-left: 5px;
+}
+.btn-login, .btn-register{
+    border: none;
+    border-radius: 10px;
+    font-weight: lighter;
+    background-color: #FD6600;
+    padding-inline: 20px;
+}
+.btn-login:hover, .btn-register:hover{
+    color: #FD6600;
+    border: 1px;
+    border-style: solid;
+    border-color: #FD6600;
+    background-color: #ffffff;
 }
 
 /* account */
@@ -250,9 +270,28 @@ a{
     margin-right: 5%;
     cursor: pointer;
 }
+/* .tasks-logo{
+} */
+.home-button{
+    background-color: #FD6600;
+    font-weight: lighter;
+    border: 1px;
+    border-radius: 10px;
+    margin-top: 2%;
+    padding-inline: 5%;
+}
+.home-button:hover{
+    color: #FD6600;
+    border-radius: 10px;
+    border: 1px;
+    border-style: solid;
+    border-color: #FD6600;
+    background-color: #ffffff;
+}
 .close_task_modal{
     display: none;
 }
+
 
 .footer{
     position: fixed;
@@ -268,21 +307,15 @@ a{
 
 /* points of responsibility */
 /* handheld */
-@media (min-width: 320px) and (max-width: 568px){ 
-    /* bases */
-    .container-fluid.home{
-        position: relative;
-        background: #ffffff;
-        /* box-shadow: 6px 5px 4px rgba(0, 0, 0, 0.13); */
-        /* border: 1px solid #dddddd; */
-        border-radius: 5px;
-        width: 100%;
-        height: 100%;
-        /* margin-top: 2%; */
-    }
+@media (min-width: 320px) and (max-width: 599px){ 
+    
 }
 /* tablet */
 @media (min-width: 600px) and (max-width: 800px){ 
+
+}
+/* desktop */
+@media only screen and (min-width: 801px){
 
 }
 

@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.contrib.auth.decorators import login_required
+from django.conf.urls import handler404
 
 import nessues_app.views as views
 import nessues_app_users.views as users_views
@@ -35,3 +36,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
 ]
+
+# handler404 = 'nessues_app_users.views.error_404_view'

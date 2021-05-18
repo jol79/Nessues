@@ -62,5 +62,11 @@ def account_view(request):
     }
 
     return render(request, 'nessues_app_users/account.html', context=content)
+
+
+def error_404_view(request, exception):
+    content = {}
+
+    return render(request, 'nessues_app_users/error_404.html', context=content)
         
 
