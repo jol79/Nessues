@@ -310,6 +310,9 @@ a{
 .close_task_modal{
     display: none;
 }
+.container-home-info{
+    display: none;
+}
 
 
 .footer{
@@ -325,8 +328,37 @@ a{
 }
 
 /* points of responsibility */
-/* handheld */
+/* phone */
 @media (min-width: 320px) and (max-width: 599px){ 
+    html,
+    body{
+        background-color: #f1f1f1;
+        height: 100%;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+    .background-image-rightone{
+        display: none;
+    }
+
+    /* bases */
+    .container-fluid.home{
+        position: relative;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        width: 100%;
+        height: 100%;
+        margin-top: 2%;
+        padding-inline: 0px;
+    }
+    .container-data{
+        padding-inline: 20px;
+        padding-top: 5px;
+        padding-bottom: 30px;
+    }
+    
     /* home */
     .container-home-data{
         display: flex;
@@ -335,6 +367,63 @@ a{
         margin-top: 5%;
         padding-inline: 10%;
     }
+    .container-home-info{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        text-align: center;
+        
+        padding-top: 4%;
+        padding-inline: 0%;
+    }
+    .home-info-section{
+        margin-top: 20%;
+        background-color: #F8F8F8;
+        height: 87.5%;
+        width: 100%;
+    }
+    .slogan{
+        font-size: 30px;
+        font-weight: bold;
+    }
+    .platform-info{
+        font-size: 13px;
+        font-weight: lighter;
+    }
+    .tasks-logo{
+        display: none;
+    }
+    .home-button{
+        background-color: #FD6600;
+        font-size: 10px;
+        font-weight: normal;
+        border: 1px;
+        border-radius: 10px;
+        margin-top: 2%;
+        padding-inline: 5%;
+        width: 30%;
+    }
+    .group-icon, .task-icon, .monoroom-icon{
+        object-fit: contain;
+        width: 30%;
+        height: 30%;
+    }
+    .home-info-text{
+        font-size: 15px;
+        font-weight: lighter;
+    }
+    .block-groups, .block-tasks, .block-rooms{
+        font-size: 24px;
+        font-weight: 275;
+    }
+    .block-groups{ 
+        order: 2;
+    }
+    .tasks-icon{
+        object-fit: contain;
+        width: 65%;
+        height: 65%;
+    }
 }
 /* tablet */
 @media (min-width: 600px) and (max-width: 800px){ 
@@ -342,11 +431,6 @@ a{
     body{
         background-color: #FAAD41;
         height: 100%;
-        width: 100%;
-    }
-    .home-info-section{
-        background-color: #F8F8F8;
-        height: 22%;
         width: 100%;
     }
     /* bases */
@@ -379,6 +463,11 @@ a{
         margin-top: 1%;
         padding-top: 4%;
         padding-inline: 0%;
+    }
+    .home-info-section{
+        background-color: #F8F8F8;
+        height: 22%;
+        width: 100%;
     }
     .slogan{
         font-size: 34px;
