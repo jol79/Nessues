@@ -28,6 +28,7 @@ urlpatterns = [
     path('logout/', users_views.logout_view, name='logout'),
     path('register/', users_views.register_view, name='register'),
     path('account/', users_views.account_view, name='account'),
+    path('invitations/', login_required(views.InvitationsView.as_view()), name='intivations'),
     path('groups/', login_required(views.GroupsView.as_view()), name='groups'),
     path('rooms/', login_required(views.RoomsView.as_view()), name='rooms'),
     path('tables/<str:redirected_from>/<int:key_id>/', login_required(views.TablesView.as_view()), name='tables'),

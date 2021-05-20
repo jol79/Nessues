@@ -85,4 +85,4 @@ class Invitation(models.Model):
     group = models.ForeignKey(Nessues_Group, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"From {self.group} to {self.user}"
+        return f"From {self.group.name} to {self.user}"

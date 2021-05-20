@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <h2>List of your invitations</h2>
+    <br>
+    {% if object_list.strip %}
+        {% for invitation in object_list %}
+            <p>{{ invitation }}</p>
+        {% endfor %}
+    {% else %}
+        <p>There are no invitations for you, you can send your id to the owner of the group to be invited to the <b>party</b></p>
+    {% endif %}
+{% endblock content %}

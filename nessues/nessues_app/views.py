@@ -6,8 +6,13 @@ from django.contrib import messages
 from django.views.generic import TemplateView, ListView
 from django.contrib.auth.decorators import login_required
 
-from .models import Room, Table, Task, Nessues_Group, Nessues_Group_User
-from .forms import CreateRoomForm, CreateTableForm, CreateTaskForm, UpdateTaskForm, CompleteTaskForm, DeleteRoomForm, CreateGroupForm, CloseGroupForm
+from .models import (
+    Room, Table, Task, Nessues_Group, 
+    Nessues_Group_User, Invitation)
+from .forms import (
+    CreateRoomForm, CreateTableForm, CreateTaskForm, UpdateTaskForm, 
+    CompleteTaskForm, DeleteRoomForm, CreateGroupForm, CloseGroupForm,
+    AcceptInvitationForm, RefuseInvitationForm)
 
 
 def home_view(request):
@@ -190,6 +195,27 @@ class TasksView(TemplateView):
         
         return render(request, self.template_name, {'create': create, 'update': update, 'complete': complete})
 
+
+"""
+ Forms to handle:
+    1) accept invitation;
+    2) refuse invitation.
+"""
+class InvitationsView(ListView): 
+    model = Invitation
+    template_name = "nessues_app/invitations.html"
+
+    # def get(self, request, *args, **kwargs):
+    #     # self.AcceptInvitationForm(self.request.GET or None)
+    #     # self.RefuseInvitationForm(self.request.GET or None)
+    #     return super(list(), self).get(request, *args, **kwargs)
+    
+    def get_queryset(self):
+        try:        
+            queryset = self.model.objects.get(user=self.request.user.id)
+        except:
+            return None
+        return queryset
 
 def about_view(request):
     content = {  }

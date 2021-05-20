@@ -1,9 +1,14 @@
 from django import forms
-from django.forms import CharField, HiddenInput, BooleanField, IntegerField
-from .models import Room, Table, Task, Nessues_Group, Nessues_Group_User
+from django.forms import (
+    CharField, HiddenInput, BooleanField, IntegerField)
+from .models import (
+    Room, Table, Task, Nessues_Group, 
+    Nessues_Group_User, Invitation)
 
 
-# rooms
+"""
+ rooms
+"""
 class CreateRoomForm(forms.ModelForm):
     name = CharField(max_length=21)
     description = CharField(max_length=32)
@@ -12,7 +17,7 @@ class CreateRoomForm(forms.ModelForm):
         model = Room
         fields = ['name', 'description', 'owner']
         widgets = {'owner': forms.HiddenInput()}
-    
+
 class DeleteRoomForm(forms.ModelForm):
     id = IntegerField()
 
@@ -20,7 +25,9 @@ class DeleteRoomForm(forms.ModelForm):
         model = Room
         fields = ['id']
 
-# groups
+"""
+ groups
+"""
 class CreateGroupForm(forms.ModelForm):
     name = CharField(max_length=21)
     description = CharField(max_length=32)
@@ -28,7 +35,7 @@ class CreateGroupForm(forms.ModelForm):
     class Meta:
         model = Nessues_Group
         fields = ['name', 'description']
-# to fix
+# TO FIX, doesn't work properly
 class CloseGroupForm(forms.ModelForm):
     id = IntegerField()
 
@@ -36,7 +43,9 @@ class CloseGroupForm(forms.ModelForm):
         model = Nessues_Group_User
         fields = ['id']
 
-# tables
+"""
+ tablets
+"""
 class CreateTableForm(forms.ModelForm):
     name = CharField(max_length=21)
     description = CharField(max_length=60)
@@ -46,7 +55,9 @@ class CreateTableForm(forms.ModelForm):
         fields = ['name', 'description', 'room', 'group']
         widgets = {'room': forms.HiddenInput(), 'group': forms.HiddenInput()}
 
-# tasks
+"""
+ tasks
+"""
 class CreateTaskForm(forms.ModelForm): 
     text = CharField(max_length=120)
 
@@ -70,3 +81,20 @@ class CompleteTaskForm(forms.ModelForm):
         model = Task
         fields = ['id', 'table', 'completed', 'created_by']
         widgets = {'table': forms.HiddenInput(), 'completed': forms.HiddenInput(), 'created_by': forms.HiddenInput()}
+
+"""
+ invitations
+"""
+class AcceptInvitationForm(forms.ModelForm):
+    id = IntegerField()
+
+    class Meta:
+        model = Invitation
+        fields = ['id']
+
+class RefuseInvitationForm(forms.ModelForm):
+    id = IntegerField()
+
+    class Meta:
+        model = Invitation
+        fields = ['id']
