@@ -77,3 +77,12 @@ class Task(models.Model):
 
     def __str__(self):
         return self.text
+
+
+class Invitation(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    group = models.ForeignKey(Nessues_Group, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"From {self.group} to {self.user}"
