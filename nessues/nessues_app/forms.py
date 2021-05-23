@@ -85,6 +85,13 @@ class CompleteTaskForm(forms.ModelForm):
 """
  invitations
 """
+class SendInvitationForm(forms.ModelForm):
+
+    class Meta:
+        model = Invitation
+        fields = ['group', 'user']
+        widgets = {'group': forms.HiddenInput()}
+
 class AcceptInvitationForm(forms.ModelForm):
     id = IntegerField()
 

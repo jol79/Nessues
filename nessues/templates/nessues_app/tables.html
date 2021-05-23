@@ -1,10 +1,11 @@
-T{% extends "base.html" %}
+{% extends "base.html" %}
 {% load widget_tweaks %}
 
 
 {% block content %}
     <div class="workspace-nav">
-        <p>Available tables for <b>{{ current_name }}</b> {% if current_type == "group"  %} group {% else %} room {% endif %}</p>
+        <p class="availability">Available tables for <b>{{ current_name }}</b> {% if current_type == "group"  %} group {% else %} room {% endif %}</p>
+        <a data-id="{{ current }}" data-toggle="modal" data-target="#inviteUserModal" class="inviteUser" style="color: green;">Invite a user</a>
         <a data-id="{{ current }}" data-toggle="modal" data-target="#deleteRoomModal" class="deleteRoom" style="color: red;">Delete room</a>
     </div>
 
@@ -92,6 +93,36 @@ T{% extends "base.html" %}
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button class="btn btn-primary" type="submit">Delete room</button>
 
+                    </form>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal invite user to the group form -->
+    <div class="invite_user_modal">
+        <div class="modal fade" id="inviteUserModal" tabindex="-1" role="dialog" aria-labelledby="inviteUserForm" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalLabel">Provide name of the user that you wanna invite</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+
+                <div class="modal-body" style="text-align: center;">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {% render_field invite.user name="id_name" %}
+                        </div>
+                        <div class="form-group">
+                            {% render_field invite.group name="id_group" %}
+                        </div>
+                        
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" type="submit">Delete room</button>
                     </form>
                 </div>
             </div>

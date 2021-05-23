@@ -11,3 +11,9 @@ $(function(){
         $(".form-group-id #id-id").val(id);
     })
 });
+
+$(function(){
+    $(".inviteUser").click(function(){
+        $('.invite_user_modal').show();
+    })
+});

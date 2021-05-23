@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.views.generic import TemplateView, ListView
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 from .models import (
     Room, Table, Task, Nessues_Group, 
@@ -12,7 +13,7 @@ from .models import (
 from .forms import (
     CreateRoomForm, CreateTableForm, CreateTaskForm, UpdateTaskForm, 
     CompleteTaskForm, DeleteRoomForm, CreateGroupForm, CloseGroupForm,
-    AcceptInvitationForm, RefuseInvitationForm)
+    AcceptInvitationForm, RefuseInvitationForm, SendInvitationForm)
 
 
 def home_view(request):
@@ -90,6 +91,7 @@ class TablesView(TemplateView):
     create_table_class = CreateTableForm
     delete_room_class = DeleteRoomForm
     close_group_class = CloseGroupForm
+    invite_user_class = SendInvitationForm
 
     def get(self, request, *args, **kwargs):
         if self.kwargs['redirected_from'] == 'group':
@@ -100,7 +102,8 @@ class TablesView(TemplateView):
                 except:
                     available_tables = None
                 create = self.create_table_class(initial={'group': current.id})
-                delete = self.close_group_class(initial={'group': self.kwargs['key_id']})
+                delete = self.close_group_class(initial={'group': current.id})
+                invite = self.invite_user_class(initial={'group': current.id})
             except:
                 pass
         
@@ -116,16 +119,39 @@ class TablesView(TemplateView):
             except:
                 pass
         
-        return render(request, self.template_name, {'title': self.title, 'current_type': self.kwargs['redirected_from'], 'current': current.id, 'current_name': current.name, 'available_tables': available_tables, 'create': create, 'delete': delete})
+        try:
+            return render(request, self.template_name, {'title': self.title, 'current_type': self.kwargs['redirected_from'], 'current': current.id, 'current_name': current.name, 'available_tables': available_tables, 'create': create, 'delete': delete, 'invite': invite})
+        except:
+            return render(request, self.template_name, {'title': self.title, 'current_type': self.kwargs['redirected_from'], 'current': current.id, 'current_name': current.name, 'available_tables': available_tables, 'create': create, 'delete': delete})
         
 
     def post(self, request, *args, **kwargs):
         create = self.create_table_class(request.POST)
+        invite = self.invite_user_class(request.POST)
         delete = self.delete_room_class(request.POST)
 
         if create.is_valid():
             create.save()
             return HttpResponseRedirect(f"/tables/{self.kwargs['redirected_from']}/{self.kwargs['key_id']}")
+
+        if invite.is_valid():
+            user_to_invite = invite.cleaned_data['user']
+            group_send_invitation_from = invite.cleaned_data['group']
+            
+            try:
+                user_exists = User.objects.get(username=user_to_invite)
+                print(f"USER WAS FOUND: {user_exists}")
+                # check if user is not participant of the group, no current invitations sent to the user
+                if not Nessues_Group_User.objects.get(group=group_send_invitation_from, user=user_to_invite.id) and not Invitation.objects.get(group=group_send_invitation_from, user=user_to_invite.id):
+                    invite.save()
+                    messages.success(request, f"User {user_to_invite} invited successfully!")
+            except:
+                messages.warning(request, "No user with this name")
+                print()
+
+            return HttpResponseRedirect(f"/tables/{self.kwargs['redirected_from']}/{self.kwargs['key_id']}")
+        else:
+            print("INVITE FORM NOT VALID", invite)
         
         if delete.is_valid():
             id_to_delete = delete.cleaned_data['id']

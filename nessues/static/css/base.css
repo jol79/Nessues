@@ -145,6 +145,12 @@ a{
     margin-bottom: -1%;
     padding-inline: 15%;
 }
+.inviteUser:hover, .deleteRoom:hover{
+    cursor: pointer;
+}
+.availability{
+    flex-grow: 4;
+}
 .container-monorooms-data{
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
