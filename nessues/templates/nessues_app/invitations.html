@@ -1,14 +1,31 @@
-{% extends "base.html" %}
+{% extends "base_account.html" %}
+{% load widget_tweaks %}
 
 
 {% block content %}
-    <h2>List of your invitations</h2>
-    <br>
-    {% if not object_list.strip %}
-        {% for invitation in object_list %}
-            <p>{{ invitation }}</p>
-        {% endfor %}
-    {% else %}
-        <p>There are no invitations for you, you can send your id to the owner of the group to be invited to the <b>party</b></p>
-    {% endif %}
+
+    <div class="account-links">
+        <a class="btn btn-outline-secondary rounded-pill" href="/">Home</a>
+        <a class="btn btn-outline-secondary rounded-pill" href="/account">Account</a>
+    </div>
+
+    <div class="invitations-data">
+        <div class="workspace-nav">
+            List of invitations
+        </div>
+    
+        <hr style="width: 65%; margin-left: 14.5%;">
+    
+        <div class="container-invitations-data">
+            {% if not object_list.strip %}
+            {% for invitation in object_list %}
+                <b class="invitation-from">{{ invitation.group.name }}</b>
+                <button class="btn btn-outline-success">accept</button>
+                <button class="btn btn-outline-danger">reject</button>
+            {% endfor %}
+        {% else %}
+            <p>There are no invitations for you, you can send your id to the owner of the group to be invited to the <b>party</b></p>
+        {% endif %}
+        </div>
+    </div>
 {% endblock content %}

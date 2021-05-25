@@ -320,6 +320,24 @@ a{
     display: none;
 }
 
+/* invitations */
+.container-invitations-data{
+    display: grid;
+    grid-template-columns: max-content min-content min-content;
+    text-align: center;
+    gap: 2%;
+    
+    margin-left: 10%;
+    margin-right: 10%;
+    padding-inline: 5%;
+}
+.invitations-data{
+    margin-top: 20%;
+}
+.invitation-from{
+    padding-top: 6%;
+}
+
 
 .footer{
     position: fixed;
