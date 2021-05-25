@@ -28,7 +28,14 @@
 
         <!-- Groups/Rooms statistics -->
         <div class="account-statistics">
-            You are participating in: <strong>{{ groups_stats }}</strong> Groups
+            You are participating in: <strong>{{ groups_stats }}</strong> Groups |
+            {% if invitations_received.count == 1 %}
+                <a href="/invitations" style="color: green;">+{{ invitations_received.count }} Invitation</a>
+            {% elif invitations_received.count > 1 %}
+                <a href="/invitations" style="color: green;">+{{ invitations_received.count }} Invitations</a>
+            {% else %}
+                <a href="/invitations" style="color: gray;">Invitations</a>
+            {% endif %}
             <br>
             You have already created <strong>{{ rooms_stats }}</strong> Mono rooms
         </div>

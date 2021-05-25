@@ -4,7 +4,7 @@
 {% block content %}
     <h2>List of your invitations</h2>
     <br>
-    {% if object_list.strip %}
+    {% if not object_list.strip %}
         {% for invitation in object_list %}
             <p>{{ invitation }}</p>
         {% endfor %}

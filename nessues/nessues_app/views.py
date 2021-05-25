@@ -243,7 +243,7 @@ class InvitationsView(ListView):
     
     def get_queryset(self):
         try:        
-            queryset = self.model.objects.get(user=self.request.user.id)
+            queryset = self.model.objects.filter(user=self.request.user.id)
         except:
             return None
         return queryset
