@@ -99,7 +99,7 @@ class AcceptInvitationForm(forms.ModelForm):
         model = Invitation
         fields = ['id']
 
-class RefuseInvitationForm(forms.ModelForm):
+class RejectInvitationForm(forms.ModelForm):
     id = IntegerField()
 
     class Meta:

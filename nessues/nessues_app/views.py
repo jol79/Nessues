@@ -13,7 +13,7 @@ from .models import (
 from .forms import (
     CreateRoomForm, CreateTableForm, CreateTaskForm, UpdateTaskForm, 
     CompleteTaskForm, DeleteRoomForm, CreateGroupForm, CloseGroupForm,
-    AcceptInvitationForm, RefuseInvitationForm, SendInvitationForm)
+    AcceptInvitationForm, RejectInvitationForm, SendInvitationForm)
 
 
 def home_view(request):
@@ -232,21 +232,43 @@ class TasksView(TemplateView):
     1) accept invitation;
     2) refuse invitation.
 """
-class InvitationsView(ListView): 
-    model = Invitation
-    template_name = "nessues_app/invitations.html"
+class InvitationsView(TemplateView): 
+    template_name = 'nessues_app/invitations.html'
+    accept_invitation_class = AcceptInvitationForm
+    reject_invitation_class = RejectInvitationForm
 
-    # def get(self, request, *args, **kwargs):
-    #     # self.AcceptInvitationForm(self.request.GET or None)
-    #     # self.RefuseInvitationForm(self.request.GET or None)
-    #     return super(list(), self).get(request, *args, **kwargs)
-    
-    def get_queryset(self):
-        try:        
-            queryset = self.model.objects.filter(user=self.request.user.id)
-        except:
-            return None
-        return queryset
+    def get(self, request, *args, **kwargs):
+        available_invitation = Invitation.objects.filter(user=self.request.user.id)
+        accept = self.accept_invitation_class()
+        reject = self.reject_invitation_class()
+
+        return render(request, self.template_name, {'available_invitations': available_invitation, 'accept': accept, 'reject': reject})
+
+    def post(self, request, *args, **kwargs):
+        accept = self.accept_invitation_class(request.POST)
+        reject = self.reject_invitation_class(request.POST)
+
+        # create new relation between user and nessues_group, role = 3 (common user). At the end, if success - delete the invitation
+        if accept.is_valid():
+            try:
+                invitation_to_accept = Invitation.objects.get(id=accept.cleaned_data['id'])
+                group_where_to_add = invitation_to_accept.group.id
+                group_where_to_add.users.add(self.request.user.id, through_defaults={'role': 3})
+                group_where_to_add.save()
+                message.success(request, "You successfully accepted the request to join the group")
+                invitation_to_accept.delete()
+                return HttpResponseRedirect('/invitations')
+            except:
+                messages.warning(request, "Something went wrong, please try again")
+
+        # delete row from the invitations table
+        if reject.is_valid():
+            invitation_to_reject = Invitation.objects.get(id=accept.cleaned_data['id'])
+            invitation_to_reject.delete()
+            messages.success(request, "Request successfully rejected")
+            return HttpResponseRedirect('/invitations')
+
+        return render(reuqest, self.template_name, {'accept': accept, 'reject': reject})
 
 def about_view(request):
     content = {  }

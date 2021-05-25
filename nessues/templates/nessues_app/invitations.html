@@ -17,15 +17,27 @@
         <hr style="width: 65%; margin-left: 14.5%;">
     
         <div class="container-invitations-data">
-            {% if not object_list.strip %}
-            {% for invitation in object_list %}
-                <b class="invitation-from">{{ invitation.group.name }}</b>
-                <button class="btn btn-outline-success">accept</button>
-                <button class="btn btn-outline-danger">reject</button>
-            {% endfor %}
-        {% else %}
-            <p>There are no invitations for you, you can send your id to the owner of the group to be invited to the <b>party</b></p>
-        {% endif %}
+            {% if not available_invitations.strip %}
+                {% for invitation in available_invitations %}
+                    <b class="invitation-from">{{ invitation.group.name }}</b>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {% render_field accept.id name="id_name" value=invitation.id hidden=true %}
+                        </div>
+                        <button class="btn btn-outline-success">Accept</button>
+                    </form> 
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            {% render_field reject.id name="id_name" value=invitation.id hidden=true %}
+                        </div>
+                        <button class="btn btn-outline-danger">Reject</button>
+                    </form>
+                {% endfor %}
+            {% else %}
+                <p>There are no invitations for you, you can send your id to the owner of the group to be invited to the <b>party</b></p>
+            {% endif %}
         </div>
     </div>
 {% endblock content %}
