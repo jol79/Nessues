@@ -137,21 +137,26 @@ class TablesView(TemplateView):
         if invite.is_valid():
             user_to_invite = invite.cleaned_data['user']
             group_send_invitation_from = invite.cleaned_data['group']
+            print(f"CLEANED DATA: {invite.cleaned_data}")
             
             try:
                 user_exists = User.objects.get(username=user_to_invite)
-                print(f"USER WAS FOUND: {user_exists}")
-                # check if user is not participant of the group, no current invitations sent to the user
-                if not Nessues_Group_User.objects.get(group=group_send_invitation_from, user=user_to_invite.id) and not Invitation.objects.get(group=group_send_invitation_from, user=user_to_invite.id):
-                    invite.save()
-                    messages.success(request, f"User {user_to_invite} invited successfully!")
+                try:
+                    if not Invitation.objects.filter(group=group_send_invitation_from, user=user_to_invite.id):
+                        try:
+                            if not Nessues_Group_User.objects.filter(group=group_send_invitation_from, user=user_to_invite.id):
+                                messages.success(request, "Invitation was sent")
+                                invite.save()
+                        except:
+                            messages.warning(request, "User already participate in the current group")
+                except:
+                    messages.warning(request, "You cannot send invitation twice to the same user")
             except:
                 messages.warning(request, "No user with this name")
-                print()
 
             return HttpResponseRedirect(f"/tables/{self.kwargs['redirected_from']}/{self.kwargs['key_id']}")
         else:
-            print("INVITE FORM NOT VALID", invite)
+            print("INVALID INVITATION FORM", invite)
         
         if delete.is_valid():
             id_to_delete = delete.cleaned_data['id']
