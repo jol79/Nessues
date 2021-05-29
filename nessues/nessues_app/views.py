@@ -161,19 +161,25 @@ class TablesView(TemplateView):
         
         if delete.is_valid():
             id_to_delete = delete.cleaned_data['id']
-            current_room = (Room.objects.get(id=self.kwargs['key_id'])).id
+            if self.kwargs['redirected_from'] == 'room': 
+                current_to_delete = Room.objects.get(id=self.kwargs['key_id']).id
+            elif self.kwargs['redirected_from'] == 'group':
+                current_to_delete = Nessues_Group.objects.get(id=self.kwargs['key_id']).id
 
-            if current_room != id_to_delete:
-                messages.warning(request, "You were restricted to delete other room")
-                return HttpResponseRedirect(f'/tables/{self.kwargs["key_id"]}')
+            if current_to_delete != id_to_delete:
+                messages.warning(request, f"You were restricted to delete other {{ self.kwargs['redirected_from'] }}s")
+                return HttpResponseRedirect(f"/tables/{self.kwargs['redirected_from']}/{self.kwargs['key_id']}")
             try:    
-                room_to_delete = Room.objects.get(id=id_to_delete) 
-                room_to_delete.delete()
-                messages.success(request, "Room deleted successfully")
-                return HttpResponseRedirect('/rooms')
+                if self.kwargs['redirected_from'] == 'room':
+                    to_delete = Room.objects.get(id=id_to_delete) 
+                elif self.kwargs['redirected_from'] == 'group':
+                    to_delete = Nessues_Group.objects.get(id=id_to_delete) 
+                to_delete.delete()
+                messages.success(request, f"{{ self.kwargs['redirected_from'] }} deleted successfully")
+                return HttpResponseRedirect("/account")
             except Exception:
                 messages.warning(request, 'Wrong id provided, try again')
-                return HttpResponseRedirect('/rooms')
+                return HttpResponseRedirect(f"/tables/{self.kwargs['redirected_from']}/{self.kwargs['key_id']}")
 
         return render(request, self.template_name, {'create': create, 'delete': delete})
 
