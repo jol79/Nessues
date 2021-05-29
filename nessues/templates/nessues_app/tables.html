@@ -9,11 +9,11 @@
             {% if user_role == 1 or user_role == 2 %}
                 <a data-id="{{ current }}" data-toggle="modal" data-target="#inviteUserModal" class="inviteUser" style="color: green;">Invite a user</a>
                 {% if user_role != 2 %}
-                    <a data-id="{{ current }}" data-toggle="modal" data-target="#deleteGroupModal" class="deleteGroup" style="color: red;">Delete group</a>
+                    <a data-id="{{ current }}" data-toggle="modal" data-target="#deletegroupModal" class="deleteGroup" style="color: red;">Delete group</a>
                 {% endif %}
             {% endif %}
         {% elif current_type == 'room' %}
-            <a data-id="{{ current }}" data-toggle="modal" data-target="#deleteRoomModal" class="deleteRoom" style="color: red;">Delete room</a>
+            <a data-id="{{ current }}" data-toggle="modal" data-target="#deleteroomModal" class="deleteRoom" style="color: red;">Delete room</a>
         {% endif %}
     </div>  
 
@@ -78,19 +78,19 @@
         </div>
     </div>
 
-    <!-- Modal delete room form -->
-    <div class="delete_room_modal">
-        <div class="modal fade" id="deleteRoomModal" tabindex="-1" role="dialog" aria-labelledby="deleteRoomForm" aria-hidden="true">
+    <!-- Modal delete room/group form -->
+    <div class="delete_{{ current_type }}_modal">
+        <div class="modal fade" id="delete{{ current_type }}Modal" tabindex="-1" role="dialog" aria-labelledby="delete{{ current_type }}Form" aria-hidden="true">
             <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="ModalLabel">Are you sure that you wanna delete this room?</h5>
+                    <h5 class="modal-title" id="ModalLabel">Are you sure that you wanna delete this {{ current_type }}?</h5>
                     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
                     </button>
                 </div>
 
                 <div class="modal-body" style="text-align: center;">
-                    <h6>Provide {{ current_room }} to confirm the action</h6>
+                    <h6>Provide <b>{{ current }}</b> to confirm the action</h6>
 
                     <form method="POST">
                         {% csrf_token %}
@@ -99,8 +99,7 @@
                         </div>
                         
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button class="btn btn-primary" type="submit">Delete room</button>
-
+                        <button class="btn btn-primary" type="submit">Delete {{ current_type }}</button>
                     </form>
                 </div>
             </div>

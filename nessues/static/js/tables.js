@@ -11,6 +11,13 @@ $(function(){
         $(".form-group-id #id-id").val(id);
     })
 });
+$(function(){
+    $(".deleteGroup").click(function(){
+        $('.delete_group_modal').show();
+        var id = $(this).data('id');
+        $(".form-group-id #id-id").val(id);
+    })
+});
 
 $(function(){
     $(".inviteUser").click(function(){

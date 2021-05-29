@@ -1,6 +1,7 @@
 
 html,
 body{
+    font-family: 'Raleway';
     background-color: #FAAD41;
     height: 95%;
     width: 100%;
@@ -262,13 +263,14 @@ a{
 }
 
 /* tasks */
-.container.tasks{
+.container.tasks, .container.createTask{
     display: flex;
     flex-direction: column;  
 
     margin-top: 2.5%;
     padding-inline: 15%;
 }
+
 .data_cubes.tasks{
     display: flex;
     flex-direction: row;
