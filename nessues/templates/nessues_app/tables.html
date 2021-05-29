@@ -5,9 +5,17 @@
 {% block content %}
     <div class="workspace-nav">
         <p class="availability">Available tables for <b>{{ current_name }}</b> {% if current_type == "group"  %} group {% else %} room {% endif %}</p>
-        <a data-id="{{ current }}" data-toggle="modal" data-target="#inviteUserModal" class="inviteUser" style="color: green;">Invite a user</a>
-        <a data-id="{{ current }}" data-toggle="modal" data-target="#deleteRoomModal" class="deleteRoom" style="color: red;">Delete room</a>
-    </div>
+        {% if current_type == 'group' %}
+            {% if user_role == 1 or user_role == 2 %}
+                <a data-id="{{ current }}" data-toggle="modal" data-target="#inviteUserModal" class="inviteUser" style="color: green;">Invite a user</a>
+                {% if user_role != 2 %}
+                    <a data-id="{{ current }}" data-toggle="modal" data-target="#deleteGroupModal" class="deleteGroup" style="color: red;">Delete group</a>
+                {% endif %}
+            {% endif %}
+        {% elif current_type == 'room' %}
+            <a data-id="{{ current }}" data-toggle="modal" data-target="#deleteRoomModal" class="deleteRoom" style="color: red;">Delete room</a>
+        {% endif %}
+    </div>  
 
     <hr style="width: 53%; margin-left: 14.5%;">
 

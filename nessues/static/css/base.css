@@ -448,6 +448,54 @@ a{
         width: 65%;
         height: 65%;
     }
+
+    /* rooms */
+    .workspace-nav{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        margin-top: 2.5%;
+        margin-right: 18%;
+        margin-bottom: -5%;
+        padding-inline: 15%;
+
+        font-size: 14px;
+    }
+    .container-monorooms-data{
+        display: grid;
+        grid-template-columns: 50% 50%;
+        text-align: center;
+        gap: 10%;
+        
+        margin-right: 30%;
+        padding-inline: 15%;
+    }
+    .data_cubes{
+        text-align: left;
+        font-size: 14px;
+        padding-top: 2%;
+        padding-left: 5%;
+        padding-bottom: 10%;
+        cursor: pointer;
+
+        background: #FAAD41; 
+        border-radius: 2px;
+        width: 100%;
+        height: 100%;
+    }
+    .data_cubes.new_room{
+        background-color: #F8F8F8;
+        text-align: center;
+        padding-top: 10%;
+        padding-left: 0%;
+        padding-bottom: 2%;
+    }
+    .create_new_room-text{
+        font-size: 13px;
+        font-weight: lighter;
+        color: #434343;
+    }
 }
 /* tablet */
 @media (min-width: 600px) and (max-width: 800px){ 
@@ -521,6 +569,53 @@ a{
         object-fit: contain;
         width: 75%;
         height: 75%;
+    }
+
+    /* rooms */
+    .workspace-nav{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+
+        margin-top: 2.5%;
+        margin-right: 18%;
+        margin-bottom: -3%;
+        padding-inline: 15%;
+        font-size: 15px;
+    }
+    .container-monorooms-data{
+        display: grid;
+        grid-template-columns: 34% 34% 34%;
+        text-align: center;
+        gap: 10%;
+        
+        margin-right: 30%;
+        padding-inline: 15%;
+    }
+    .data_cubes{
+        text-align: left;
+        font-size: 14px;
+        padding-top: 2%;
+        padding-left: 5%;
+        padding-bottom: 10%;
+        cursor: pointer;
+
+        background: #FAAD41; 
+        border-radius: 2px;
+        width: 100%;
+        height: 100%;
+    }
+    .data_cubes.new_room{
+        background-color: #F8F8F8;
+        text-align: center;
+        padding-top: 10%;
+        padding-left: 0%;
+        padding-bottom: 2%;
+    }
+    .create_new_room-text{
+        font-size: 14px;
+        font-weight: lighter;
+        color: #434343;
     }
 }
 

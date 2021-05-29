@@ -96,7 +96,8 @@ class TablesView(TemplateView):
     def get(self, request, *args, **kwargs):
         if self.kwargs['redirected_from'] == 'group':
             try:
-                current = Nessues_Group.objects.get(id=(self.kwargs['key_id']))
+                current = Nessues_Group.objects.get(id=self.kwargs['key_id'])
+                user_role = Nessues_Group_User.objects.get(group=self.kwargs['key_id'], user=self.request.user.id).role
                 try:
                     available_tables = Table.objects.filter(group=current.id)
                 except:
@@ -120,7 +121,7 @@ class TablesView(TemplateView):
                 pass
         
         try:
-            return render(request, self.template_name, {'title': self.title, 'current_type': self.kwargs['redirected_from'], 'current': current.id, 'current_name': current.name, 'available_tables': available_tables, 'create': create, 'delete': delete, 'invite': invite})
+            return render(request, self.template_name, {'title': self.title, 'current_type': self.kwargs['redirected_from'], 'current': current.id, 'current_name': current.name, 'available_tables': available_tables, 'create': create, 'delete': delete, 'invite': invite, 'user_role': user_role})
         except:
             return render(request, self.template_name, {'title': self.title, 'current_type': self.kwargs['redirected_from'], 'current': current.id, 'current_name': current.name, 'available_tables': available_tables, 'create': create, 'delete': delete})
         
@@ -251,24 +252,28 @@ class InvitationsView(TemplateView):
         # create new relation between user and nessues_group, role = 3 (common user). At the end, if success - delete the invitation
         if accept.is_valid():
             try:
+                current_user = User.objects.get(id=self.request.user.id)
                 invitation_to_accept = Invitation.objects.get(id=accept.cleaned_data['id'])
-                group_where_to_add = invitation_to_accept.group.id
-                group_where_to_add.users.add(self.request.user.id, through_defaults={'role': 3})
+                group_where_to_add = Nessues_Group.objects.get(id=invitation_to_accept.group.id)
+                group_where_to_add.users.add(self.request.user.id, through_defaults={'role': 3}) # bug here
                 group_where_to_add.save()
-                message.success(request, "You successfully accepted the request to join the group")
                 invitation_to_accept.delete()
+                message.success(request, "You successfully accepted the request to join the group")
                 return HttpResponseRedirect('/invitations')
             except:
                 messages.warning(request, "Something went wrong, please try again")
 
         # delete row from the invitations table
         if reject.is_valid():
-            invitation_to_reject = Invitation.objects.get(id=accept.cleaned_data['id'])
-            invitation_to_reject.delete()
-            messages.success(request, "Request successfully rejected")
-            return HttpResponseRedirect('/invitations')
+            try:
+                invitation_to_reject = Invitation.objects.get(id=accept.cleaned_data['id'])
+                invitation_to_reject.delete()
+                messages.success(request, "Request successfully rejected")
+                return HttpResponseRedirect('/invitations')
+            except: 
+                pass
 
-        return render(reuqest, self.template_name, {'accept': accept, 'reject': reject})
+        return render(request, self.template_name, {'accept': accept, 'reject': reject})
 
 def about_view(request):
     content = {  }

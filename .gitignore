@@ -1,3 +1,5 @@
 environments
 /nessues/nessues_app/migrations
 /nessues/nessues_app_users/migrations
+/nessues/db.sqlite3.db
+
