@@ -157,6 +157,7 @@ class TablesView(TemplateView):
 
             return HttpResponseRedirect(f"/tables/{self.kwargs['redirected_from']}/{self.kwargs['key_id']}")
         else:
+            # messages.message("Something went wrong, please check provided username")
             print("INVALID INVITATION FORM", invite)
         
         if delete.is_valid():

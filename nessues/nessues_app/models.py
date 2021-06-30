@@ -86,3 +86,7 @@ class Invitation(models.Model):
 
     def __str__(self):
         return f"From {self.group.name} to {self.user}"
+
+
+
+
